@@ -34,8 +34,4 @@ public class GuidanceImg : MonoBehaviour {
 		wangqiuUI.enabled=true;
 		StartCoroutine(Keep("wangqiu"));
 	}
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

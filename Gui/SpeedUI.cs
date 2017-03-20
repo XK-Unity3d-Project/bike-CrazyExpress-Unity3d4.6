@@ -99,9 +99,4 @@ public class SpeedUI : MonoBehaviour {
 //			EnergyF.SetActive(false);
 //		}
 	}
-	// Update is called once per frame
-//	void Update () {
-//	
-//	
-//	}
 }

@@ -987,17 +987,18 @@ public class bikeNetUnity : MonoBehaviour {
 				{
 				case 0:
 					mMaxVelocity = 30;
-					subEnergy = 3.9f;
+					//subEnergy = 3.9f;
 					break;
 				case 1:
 					mMaxVelocity = 45;
-					subEnergy = 5.5f;
+					//subEnergy = 5.5f;
 					break;
 				default:
 					mMaxVelocity = 60;
-					subEnergy = 7.5f;
+					//subEnergy = 7.5f;
 					break;
 				}
+				subEnergy = 100f / 15f; //15秒.
 				
 				subEnergy = subEnergy * Time.deltaTime;
 				energy -= subEnergy;
