@@ -311,6 +311,7 @@ public class StartSenceChangeUI : MonoBehaviour {
 		}
 		IsChangeGameLevel = true;
 		SelectObj.SetActive(true);
+		ChangeLeve.ActiveSelectCityLevel();
 	}
 
 	IEnumerator ColorCorrection(int key)

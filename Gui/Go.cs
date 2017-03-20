@@ -141,5 +141,6 @@ public class Go : MonoBehaviour {
 
 		gameObject.SetActive(false);
 		pcvr.OpenGameDongGan();
+		GuidanceImg.OpenYouMenUI();
 	}
 }

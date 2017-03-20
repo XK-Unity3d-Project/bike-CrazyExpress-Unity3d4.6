@@ -41,9 +41,11 @@ public class ChangeLeve : MonoBehaviour {
 	private TweenPosition[] tween;
 	//private UISprite[] ui;
 	private bool finished;
+	static ChangeLeve _Instance;
 	// Use this for initialization
 	void Start()
 	{
+		_Instance = this;
 		GameTextType gameTextVal = GlobalData.GetGameTextMode();
 		switch (gameTextVal) {
 		case GameTextType.Chinese:
@@ -91,6 +93,10 @@ public class ChangeLeve : MonoBehaviour {
 			{
 				NetCtrlScript = netCtrl.GetComponent<NetCtrl>();
 			}
+		}
+
+		if (GlobalData.GetInstance().gameMode != GameMode.OnlineMode) {
+			OpenCityLevelUI();
 		}
 
 		InputEventCtrl.GetInstance().ClickStartBtEvent += clickStartBtEvent;
@@ -222,6 +228,9 @@ public class ChangeLeve : MonoBehaviour {
 		}
 		clickStartBt( 0 );
 
+		if (SelectObj.activeSelf) {
+			SelectObj.SetActive(false);
+		}
 		InputEventCtrl.GetInstance().ClickStartBtEvent -= clickStartBtEvent;
 	}
 
@@ -470,5 +479,24 @@ public class ChangeLeve : MonoBehaviour {
 	public IEnumerator PlayAnimation()
 	{
 		yield return new WaitForSeconds(3);
+	}
+
+	public static void ActiveSelectCityLevel()
+	{
+		_Instance.OpenCityLevelUI();
+	}
+
+	void OpenCityLevelUI()
+	{
+		Starts.SetActive(true);
+		pcvr.StartLightStateP1 = LedState.Shan;
+		bIsClickStartBt = true;
+
+		GlobalData.GetInstance().gameLeve = GameLeve.Leve1;
+		Leve1Hover.ResetToBeginning();
+		Leve1Unhover.ResetToBeginning();
+		Leve2Hover.ResetToBeginning();
+		Leve2UnHover.ResetToBeginning();
+		SelectLeve();
 	}
 }

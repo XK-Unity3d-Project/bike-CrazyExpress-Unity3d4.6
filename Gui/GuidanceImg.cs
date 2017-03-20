@@ -8,12 +8,16 @@ public class GuidanceImg : MonoBehaviour {
 	private UISprite dianchiUI;
 	public GameObject WangqiuGuidance;
 	private UISprite wangqiuUI;
+	static GuidanceImg _Instance;
 	// Use this for initialization
 	void Start () {
+		_Instance = this;
+		wangqiuUI=WangqiuGuidance.GetComponent<UISprite>();
+		wangqiuUI.enabled = false;
+		dianchiUI=DianchiGuidance.GetComponent<UISprite>();
+		dianchiUI.enabled = false;
 		GlobalScript.GetInstance().player.showDianchiGuidanceEvent+=showDianchiGuidanceEvent;
 		GlobalScript.GetInstance().player.showWangqiuGuidanceEvent+=showWangqiuGuidanceEvent;
-		wangqiuUI=WangqiuGuidance.GetComponent<UISprite>();
-		dianchiUI=DianchiGuidance.GetComponent<UISprite>();
 	}
 	private void showDianchiGuidanceEvent()
 	{
@@ -24,14 +28,24 @@ public class GuidanceImg : MonoBehaviour {
 	public IEnumerator Keep(string name)
 	{
 		yield return new WaitForSeconds(2);
-		if(name=="dianchi")
-		dianchiUI.enabled=false;
-		else
+		if(name=="dianchi") {
+			do {
+				yield return new WaitForSeconds(0.2f);
+			} while (GlobalScript.GetInstance().player.Energy > 0f);
+			dianchiUI.enabled=false;
+		}
+		else {
 			wangqiuUI.enabled=false;
+		}
 	}
 	private void showWangqiuGuidanceEvent()
 	{
 		wangqiuUI.enabled=true;
 		StartCoroutine(Keep("wangqiu"));
+	}
+
+	public static void OpenYouMenUI()
+	{
+		_Instance.showDianchiGuidanceEvent();
 	}
 }
