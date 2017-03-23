@@ -41,6 +41,9 @@ public class NetCtrl : MonoBehaviour {
 
 	void Start()
 	{
+		if (_Instance != null) {
+			Destroy(_Instance.gameObject);
+		}
 		_Instance = this;
 		gameObject.name = "_NetCtrl";
 		DontDestroyOnLoad(gameObject);

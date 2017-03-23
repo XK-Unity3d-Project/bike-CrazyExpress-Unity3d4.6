@@ -16,6 +16,9 @@ public class NetworkServerNet : MonoBehaviour {
 
 	void Awake()
 	{
+		if (_Instance != null) {
+			Destroy(_Instance.gameObject);
+		}
 		_Instance = this;
 		transform.parent = null;
 		DontDestroyOnLoad(gameObject);
