@@ -20,7 +20,7 @@ public class bike : MonoBehaviour {
 	Score scoreScript = null;
 	static public bool isIntoSuiDao = false;
 	bool isIntoSuiDaoNPC = false;
-	bool isOutSuiDao = false;
+//	bool isOutSuiDao = false;
 	bool isPlayerIntoSuiDao = false;
 	private GameObject playerSkinnedObj = null;
 	public GameObject ParticleObj = null;
@@ -3403,6 +3403,7 @@ public class bike : MonoBehaviour {
 			if(!bIsAiNPC)
 			{
 				isIntoSuiDao = true;
+				BikeGameCtrl.SetPlayerLedCheTou(true, BikeAniScript.LedCheTou);
 				if(mScriptCam == null)
 				{
 					mScriptCam = Camera.main.GetComponent<BikeCamera>();
@@ -3417,9 +3418,10 @@ public class bike : MonoBehaviour {
 			break;
 
 		case "OutSuidao":
-			isOutSuiDao = true;
+//			isOutSuiDao = true;
 			if(!bIsAiNPC)
 			{
+				BikeGameCtrl.SetPlayerLedCheTou(false, BikeAniScript.LedCheTou);
 				if(mScriptCam == null)
 				{
 					mScriptCam = Camera.main.GetComponent<BikeCamera>();
@@ -3662,7 +3664,7 @@ public class bike : MonoBehaviour {
 		bikeScript.aiMarkSpeed = aiMarkSpeed;
 		bikeScript.bIsAiNPC = bIsAiNPC;
 		bikeScript.isIntoSuiDaoNPC = isIntoSuiDaoNPC;
-		bikeScript.isOutSuiDao = isOutSuiDao;
+//		bikeScript.isOutSuiDao = isOutSuiDao;
 		bikeScript.isPlayerIntoSuiDao = isPlayerIntoSuiDao;
 		bikeScript.mSpeed = 0f;
 

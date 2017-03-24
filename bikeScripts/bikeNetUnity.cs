@@ -3578,6 +3578,7 @@ public class bikeNetUnity : MonoBehaviour {
 			isIntoSuiDao = true;
 			if(!bIsAiNPC)
 			{
+				BikeGameCtrl.SetPlayerLedCheTou(true, BikeAniScript.LedCheTou);
 				if(mScriptCam == null)
 				{
 					mScriptCam = Camera.main.GetComponent<BikeCameraNet>();
@@ -3599,6 +3600,7 @@ public class bikeNetUnity : MonoBehaviour {
 		case "OutSuidao":
 			if(!bIsAiNPC)
 			{
+				BikeGameCtrl.SetPlayerLedCheTou(false, BikeAniScript.LedCheTou);
 				if(mScriptCam == null)
 				{
 					mScriptCam = Camera.main.GetComponent<BikeCameraNet>();

@@ -20,12 +20,14 @@ public enum PlayerAniEnum
 
 public class BikeAnimatorCtrl : MonoBehaviour {
 	public bool IsAiPlayer;
+	public GameObject LedCheTou;
 	Animator PlayerAni;
 	bike BikeScript;
 	bikeNetUnity BikeNetScript;
 	// Use this for initialization
 	void Awake()
 	{
+		BikeGameCtrl.SetPlayerLedCheTou(false, LedCheTou);
 		BikeNetScript = GetComponent<bikeNetUnity>();
 		BikeScript = GetComponent<bike>();
 		PlayerAni = GetComponent<Animator>();

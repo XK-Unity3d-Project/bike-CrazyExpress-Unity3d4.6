@@ -77,4 +77,16 @@ public class BikeGameCtrl : MonoBehaviour {
 	{
 		return ScoreScript;
 	}
+
+	public static void SetPlayerLedCheTou(bool isActive, GameObject ledObj)
+	{
+		if (ledObj == null) {
+			return;
+		}
+
+		if (Application.loadedLevel == (int)GameLeve.Leve2
+		    || Application.loadedLevel == (int)GameLeve.Leve4) {
+			ledObj.SetActive(isActive);
+		}
+	}
 }
