@@ -995,16 +995,26 @@ public class bike : MonoBehaviour {
 					return;
 				}
 				
-				float rand = Random.Range(0f, 100f);
+				float rand = Random.Range(0f, 10000f) % 100;
 				if(rand < 35)
 				{
 					if(!bikeScript.bIsFall && !bikeScript.bIsAiNPC)
 					{
 						bikeScript.makeBikeFall();
 					}
+					
+					if(!bIsFall && !bIsAiNPC)
+					{
+						makeBikeFall();
+					}
 				}
 				else
 				{
+					if(!bikeScript.bIsFall && bikeScript.bIsAiNPC)
+					{
+						bikeScript.makeBikeFall();
+					}
+
 					if(!bIsFall && bIsAiNPC)
 					{
 						makeBikeFall();
@@ -2542,10 +2552,10 @@ public class bike : MonoBehaviour {
 		if(!bIsAiNPC)
 		{
 			brakeState = 0;
-			if (InputEventCtrl.PlayerSC[0] > 0f) {
-				brakeState = 3;
-				timeSub *= ( (float)brakeState / 8 );
-			}
+//			if (InputEventCtrl.PlayerSC[0] > 0f) {
+//				brakeState = 3;
+//				timeSub *= ( (float)brakeState / 8 );
+//			}
 //			if(pcvr.bIsHardWare)
 //			{
 //				//get hid info
