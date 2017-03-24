@@ -236,7 +236,7 @@ public class FreeModeCtrl : MonoBehaviour {
 	{
 		ChangeMode.IsClickModeStart = false;
 		CheckIsHavePlayerIp();
-		pcvr.ResetPlayerBianMaQiMaxVal();
+		//pcvr.ResetPlayerBianMaQiMaxVal();
 		CountOpenServer++;
 //		TimeClientFullScreen = Time.realtimeSinceStartup;
 		ServerIpInfo = NetworkServerNet.ServerPortIP;

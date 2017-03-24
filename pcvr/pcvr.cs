@@ -272,9 +272,10 @@ public class pcvr : MonoBehaviour {
 		}
 
 		SetPcvrTaBanInfo();
-		if (IsTestGetInput) {
+		GetPcvrBianMaQiVal();
+		/*if (IsTestGetInput) {
 			GetPcvrBianMaQiVal();
-		}
+		}*/
 
 		if (!bIsHardWare) {
 			return;
@@ -983,7 +984,7 @@ QiNangArray[3]				QiNangArray[1]
 			GetPcvrSteerVal();
 			CheckYouMenValInfo();
 			GetPcvrYouMenVal();
-			GetPcvrBianMaQiVal();
+			//GetPcvrBianMaQiVal();
 			
 			CheckShaCheLValInfo();
 			CheckShaCheRValInfo();
@@ -991,7 +992,7 @@ QiNangArray[3]				QiNangArray[1]
 			GetPcvrShaCheRVal();
 			CheckPcvrShaCheInput();
 		}
-		CheckPlayerBianMaQiMaxVal();
+		//CheckPlayerBianMaQiMaxVal();
 	}
 
 	float SubTaBanCount = 2.0f;
@@ -1252,7 +1253,8 @@ QiNangArray[3]				QiNangArray[1]
 	public static float TimeLastActivePcvr;
 	void CheckIsPlayerActivePcvr()
 	{
-		if (Application.loadedLevel == 1 || Application.loadedLevel == 2) {
+		if (Application.loadedLevel == (int)GameLeve.Leve1 || Application.loadedLevel == (int)GameLeve.Leve2
+		    || Application.loadedLevel == (int)GameLeve.Leve3 || Application.loadedLevel == (int)GameLeve.Leve4) {
 			return;
 		}
 
@@ -1515,7 +1517,7 @@ QiNangArray[3]				QiNangArray[1]
 				HandleJsonObj.WriteToFileXml(FileName, "BianMaQiMaxValP"+indexVal, strVal);
 			}
 			BianMaQiMaxVal[i] = Convert.ToUInt32( strVal );
-			BianMaQiMaxValTmp[indexVal] = BianMaQiMaxVal[i];
+			BianMaQiMaxValTmp[i] = BianMaQiMaxVal[i];
 		}
 		
 		for (int i = 0; i < maxVal; i++) {
@@ -1549,7 +1551,8 @@ QiNangArray[3]				QiNangArray[1]
 		TimeLastMaxBMQ = Time.time;
 
 		for (int i = 0; i < BianMaQiMaxVal.Length; i++) {
-			if (BianMaQiMaxValTmp[i] > BianMaQiMinVal[i]) {
+			BianMaQiMaxVal[i] = BianMaQiMaxValTmp[i];
+			/*if (BianMaQiMaxValTmp[i] > BianMaQiMinVal[i]) {
 				if (BianMaQiCurVal[i] > BianMaQiMaxValTmp[i] && BianMaQiCurVal[i] < BianMaQiMaxVal[i]) {
 					BianMaQiMaxVal[i] = BianMaQiCurVal[i];
 				}
@@ -1558,7 +1561,7 @@ QiNangArray[3]				QiNangArray[1]
 				if (BianMaQiCurVal[i] < BianMaQiMaxValTmp[i] && BianMaQiCurVal[i] > BianMaQiMaxVal[i]) {
 					BianMaQiMaxVal[i] = BianMaQiCurVal[i];
 				}
-			}
+			}*/
 		}
 	}
 
@@ -1571,39 +1574,41 @@ QiNangArray[3]				QiNangArray[1]
 
 	void GetPcvrBianMaQiVal()
 	{
-		if (!bIsHardWare) {
+		/*if (!bIsHardWare) {
 			return;
-		}
-		
-		int maxVal = 1;
-		uint bianMaQiCurVal = 0;
-		float bianMaQiInput = 0f;
-		for (int i = 0; i < maxVal; i++) {
-			bianMaQiCurVal = BianMaQiCurVal[i];
-			if (BianMaQiMinVal[i] < BianMaQiMaxVal[i]) {
-				//编码器（脚踏板）正接.
-				if (BianMaQiMaxVal[i] < bianMaQiCurVal) {
+		}*/
+
+		if (bIsHardWare) {
+			int maxVal = 1;
+			uint bianMaQiCurVal = 0;
+			float bianMaQiInput = 0f;
+			for (int i = 0; i < maxVal; i++) {
+				bianMaQiCurVal = BianMaQiCurVal[i];
+				if (BianMaQiMinVal[i] < BianMaQiMaxVal[i]) {
+					//编码器（脚踏板）正接.
+					/*if (BianMaQiMaxVal[i] < bianMaQiCurVal) {
 					BianMaQiMaxVal[i] = bianMaQiCurVal;
+				}*/
+					if (bianMaQiCurVal < BianMaQiMinVal[i]) {
+						bianMaQiCurVal = BianMaQiMinVal[i];
+					}
+					bianMaQiInput = ((float)bianMaQiCurVal - BianMaQiMinVal[i]) / (BianMaQiMaxVal[i] - BianMaQiMinVal[i]);
 				}
-				if (bianMaQiCurVal < BianMaQiMinVal[i]) {
-					bianMaQiCurVal = BianMaQiMinVal[i];
-				}
-				bianMaQiInput = ((float)bianMaQiCurVal - BianMaQiMinVal[i]) / (BianMaQiMaxVal[i] - BianMaQiMinVal[i]);
-			}
-			else {
-				//编码器（脚踏板）反接.
-				if (BianMaQiMaxVal[i] > bianMaQiCurVal) {
+				else {
+					//编码器（脚踏板）反接.
+					/*if (BianMaQiMaxVal[i] > bianMaQiCurVal) {
 					BianMaQiMaxVal[i] = bianMaQiCurVal;
+				}*/
+					if (bianMaQiCurVal > BianMaQiMinVal[i]) {
+						bianMaQiCurVal = BianMaQiMinVal[i];
+					}
+					bianMaQiInput = ((float)BianMaQiMinVal[i] - bianMaQiCurVal) / (BianMaQiMinVal[i] - BianMaQiMaxVal[i]);
 				}
-				if (bianMaQiCurVal > BianMaQiMinVal[i]) {
-					bianMaQiCurVal = BianMaQiMinVal[i];
-				}
-				bianMaQiInput = ((float)BianMaQiMinVal[i] - bianMaQiCurVal) / (BianMaQiMinVal[i] - BianMaQiMaxVal[i]);
+				bianMaQiInput = Mathf.Clamp01(bianMaQiInput);
+				bianMaQiInput = bianMaQiInput < 0.01f ? 0f : bianMaQiInput;
+				//			BianMaQiVal[i] = bianMaQiInput;
+				InputEventCtrl.PlayerTB[i] = bianMaQiInput;
 			}
-			bianMaQiInput = Mathf.Clamp01(bianMaQiInput);
-			bianMaQiInput = bianMaQiInput < 0.01f ? 0f : bianMaQiInput;
-//			BianMaQiVal[i] = bianMaQiInput;
-			InputEventCtrl.PlayerTB[i] = bianMaQiInput;
 		}
 
 		//InputEventCtrl.PlayerTB[0] = TestTBVal;
@@ -1618,9 +1623,6 @@ QiNangArray[3]				QiNangArray[1]
 	//[Range(0f, 1f)]public float TestTBVal = 0f;
 //	void OnGUI()
 //	{
-//		if (!IsTestBianMaQi) {
-//			return;
-//		}
 //		string strA = "playerTB "+InputEventCtrl.PlayerTB[0]+", TanBanDownCount "+TanBanDownCount;
 //		GUI.Box(new Rect(0f, Screen.height - 30f, 400f, 30f), strA);
 //	}

@@ -2617,9 +2617,11 @@ public class bike : MonoBehaviour {
 				}
 				else
 				{
-					if(!bIsMoveUp)
-					{
+					if(!bIsMoveUp) {
 						currentBrakeEnginePower -= (10f * dTime * timeSub);
+						if(currentEnginePower < 0) {
+							currentEnginePower = 0;
+						}
 					}
 				}
 			}
@@ -2772,7 +2774,8 @@ public class bike : MonoBehaviour {
 						}
 						else
 						{
-							currentEnginePower += dTime * timeAdd;
+							//currentEnginePower += dTime * timeAdd;
+							currentEnginePower += dTime * pcvr.TanBanDownCount;
 						}
 					}
 				}
@@ -2809,9 +2812,7 @@ public class bike : MonoBehaviour {
 					else if(currentEnginePower > 0)
 					{
 						currentEnginePower -= 0.1f * dTime * timeSub;
-
-						if(currentEnginePower < 0)
-						{
+						if(currentEnginePower < 0) {
 							currentEnginePower = 0;
 						}
 					}
@@ -2917,11 +2918,8 @@ public class bike : MonoBehaviour {
 	{
 		//Debug.Log("over HandlePlayerIntoJianSuDai...");
 		CancelInvoke("HandlePlayerIntoJianSuDai");
-		if(bIsMoveUp)
-		{
-			bIsMoveUp = false;
-			pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, 60.0f, 10.0f);
-		}
+		bIsMoveUp = false;
+		pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, 60.0f, 10.0f);
 		JianSuDaiNum = 0;
 		IsHitJianSuDai = false;
 		pcvr.IsHitJianSuDai = false;
