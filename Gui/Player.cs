@@ -355,7 +355,7 @@ public class Player {
 		ContinueGame();
 	}
 	private bool hasShowWangqiuGuidance;
-	private bool hasShowDianchiGuidance;
+	//private bool hasShowDianchiGuidance;
 	public EventHandel showWangqiuGuidanceEvent;
 	public EventHandel showDianchiGuidanceEvent;
 	public delegate void AddBufferEventhandel(BufferKind b);
@@ -370,11 +370,12 @@ public class Player {
 			{
 				case "Dianchi": 
 				this.Energy= (float)BufferKind.Dianchi;
-				if(!hasShowDianchiGuidance)
+				/*if(!hasShowDianchiGuidance)
 				{
 					showDianchiGuidanceEvent();
 					hasShowDianchiGuidance=true;
-				}
+				}*/
+				showDianchiGuidanceEvent();
 				AddBufferEvent(BufferKind.Dianchi);
 				break;
 
