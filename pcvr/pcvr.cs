@@ -1620,7 +1620,7 @@ QiNangArray[3]				QiNangArray[1]
 	void OnGUI()
 	{
 		string strA = "playerTB "+InputEventCtrl.PlayerTB[0]+", TanBanDownCount "+TanBanDownCount
-			+", playerSC "+InputEventCtrl.PlayerSC[0];
+			+", QiNangArray[0] "+QiNangArray[0];
 		GUI.Box(new Rect(0f, Screen.height - 30f, 400f, 30f), strA);
 	}
 

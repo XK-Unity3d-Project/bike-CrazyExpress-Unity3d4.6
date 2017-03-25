@@ -318,7 +318,8 @@ public class ChangeLeve : MonoBehaviour {
 		if( (Starts.activeSelf && key == 0) || key == 1 )
 		{
 			Starts.SetActive(false);
-			if (GlobalData.GetInstance().LinkModeState != 0) {
+			if (GlobalData.GetInstance().LinkModeState != 0
+			    && !GlobalData.GetInstance().IsFreeMode) {
 				Toubi.GetInstance().subPlayerCoin();
 			}
 
