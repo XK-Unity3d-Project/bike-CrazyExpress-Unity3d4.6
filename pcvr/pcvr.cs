@@ -273,9 +273,6 @@ public class pcvr : MonoBehaviour {
 
 		SetPcvrTaBanInfo();
 		GetPcvrBianMaQiVal();
-		/*if (IsTestGetInput) {
-			GetPcvrBianMaQiVal();
-		}*/
 
 		if (!bIsHardWare) {
 			return;
@@ -984,7 +981,6 @@ QiNangArray[3]				QiNangArray[1]
 			GetPcvrSteerVal();
 			CheckYouMenValInfo();
 			GetPcvrYouMenVal();
-			//GetPcvrBianMaQiVal();
 			
 			CheckShaCheLValInfo();
 			CheckShaCheRValInfo();
@@ -1621,11 +1617,12 @@ QiNangArray[3]				QiNangArray[1]
 	}
 
 	//[Range(0f, 1f)]public float TestTBVal = 0f;
-//	void OnGUI()
-//	{
-//		string strA = "playerTB "+InputEventCtrl.PlayerTB[0]+", TanBanDownCount "+TanBanDownCount;
-//		GUI.Box(new Rect(0f, Screen.height - 30f, 400f, 30f), strA);
-//	}
+	void OnGUI()
+	{
+		string strA = "playerTB "+InputEventCtrl.PlayerTB[0]+", TanBanDownCount "+TanBanDownCount
+			+", playerSC "+InputEventCtrl.PlayerSC[0];
+		GUI.Box(new Rect(0f, Screen.height - 30f, 400f, 30f), strA);
+	}
 
 	public static float[] ShaCheLVal = new float[4];
 	public static uint[] ShaCheLCurVal = new uint[4];
@@ -1731,7 +1728,7 @@ QiNangArray[3]				QiNangArray[1]
 				shaCheInput = ((float)ShaCheLMinVal[i] - shaCheCurVal) / (ShaCheLMinVal[i] - ShaCheLMaxVal[i]);
 			}
 			shaCheInput = Mathf.Clamp01(shaCheInput);
-			//shaCheInput = shaCheInput >= 0.05f ? 1f : 0f;
+			shaCheInput = shaCheInput >= 0.1f ? 1f : 0f;
 			ShaCheLVal[i] = shaCheInput;
 			InputEventCtrl.PlayerSC[i] = ShaCheLVal[i] > ShaCheRVal[i] ? ShaCheLVal[i] : ShaCheRVal[i];
 		}
@@ -1841,7 +1838,7 @@ QiNangArray[3]				QiNangArray[1]
 				shaCheInput = ((float)ShaCheRMinVal[i] - shaCheCurVal) / (ShaCheRMinVal[i] - ShaCheRMaxVal[i]);
 			}
 			shaCheInput = Mathf.Clamp01(shaCheInput);
-			shaCheInput = shaCheInput >= 0.05f ? 1f : 0f;
+			shaCheInput = shaCheInput >= 0.1f ? 1f : 0f;
 			ShaCheRVal[i] = shaCheInput;
 			InputEventCtrl.PlayerSC[i] = ShaCheLVal[i] > ShaCheRVal[i] ? ShaCheLVal[i] : ShaCheRVal[i];
 		}

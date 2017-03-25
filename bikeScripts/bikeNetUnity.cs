@@ -2759,10 +2759,10 @@ public class bikeNetUnity : MonoBehaviour {
 		if(!bIsAiNPC)
 		{
 			brakeState = 0;
-//			if (InputEventCtrl.PlayerSC[0] > 0f) {
-//				brakeState = 3;
-//				timeSub *= ( (float)brakeState / 8 );
-//			}
+			if (InputEventCtrl.PlayerSC[0] > 0f) {
+				brakeState = 3;
+				timeSub *= ( (float)brakeState / 8 );
+			}
 //			if(pcvr.bIsHardWare)
 //			{
 //				//get hid info
