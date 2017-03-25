@@ -234,11 +234,12 @@ public class Player {
 			_CanFire=value;
 			if(temp!=value&&CanFireChange!=null)
 			{
-				if(!hasShowWangqiuGuidance)
-				{
-					showWangqiuGuidanceEvent();
-					hasShowWangqiuGuidance=true;
-				}
+//				if(!hasShowWangqiuGuidance)
+//				{
+//					showWangqiuGuidanceEvent();
+//					hasShowWangqiuGuidance=true;
+//				}
+				showWangqiuGuidanceEvent();
 				CanFireChange();
 			}
 		}
@@ -354,7 +355,7 @@ public class Player {
 		if(ContinueGame!=null)
 		ContinueGame();
 	}
-	private bool hasShowWangqiuGuidance;
+//	private bool hasShowWangqiuGuidance;
 	//private bool hasShowDianchiGuidance;
 	public EventHandel showWangqiuGuidanceEvent;
 	public EventHandel showDianchiGuidanceEvent;
