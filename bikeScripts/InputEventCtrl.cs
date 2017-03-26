@@ -32,6 +32,18 @@ public class InputEventCtrl : MonoBehaviour {
 			pcvr.IsOpenStartLight = false;
 		}
 		pcvr.SetIsPlayerActivePcvr();
+
+		if(ClickFireBtEvent != null
+		   && (Application.loadedLevel == (int)GameLeve.Leve1
+		    || Application.loadedLevel == (int)GameLeve.Leve2
+		    || Application.loadedLevel == (int)GameLeve.Leve3
+		    || Application.loadedLevel == (int)GameLeve.Leve4))
+		{
+			if (!HardwareCheckCtrl.IsTestHardWare) {
+				pcvr.FireLightState = LedState.Mie;
+			}
+			ClickFireBtEvent( val );
+		}
 	}
 
 	public event EventHandel ClickSetEnterBtEvent;
