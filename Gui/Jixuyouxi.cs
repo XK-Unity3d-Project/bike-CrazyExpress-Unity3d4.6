@@ -22,6 +22,7 @@ public class Jixuyouxi : MonoBehaviour {
 	void Start()
 	{
 		InputEventCtrl.GetInstance().ClickStartBtEvent += ClickStartBtEvent;
+		gameObject.SetActive(false);
 	}
 
 	public void StartTimer()

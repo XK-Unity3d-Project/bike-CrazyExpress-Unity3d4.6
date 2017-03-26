@@ -1617,12 +1617,12 @@ QiNangArray[3]				QiNangArray[1]
 	}
 
 	//[Range(0f, 1f)]public float TestTBVal = 0f;
-	void OnGUI()
-	{
-		string strA = "playerTB "+InputEventCtrl.PlayerTB[0]+", TanBanDownCount "+TanBanDownCount
-			+", QiNangArray[0] "+QiNangArray[0];
-		GUI.Box(new Rect(0f, Screen.height - 30f, 400f, 30f), strA);
-	}
+//	void OnGUI()
+//	{
+//		string strA = "playerTB "+InputEventCtrl.PlayerTB[0]+", TanBanDownCount "+TanBanDownCount
+//			+", QiNangArray[0] "+QiNangArray[0];
+//		GUI.Box(new Rect(0f, Screen.height - 30f, 400f, 30f), strA);
+//	}
 
 	public static float[] ShaCheLVal = new float[4];
 	public static uint[] ShaCheLCurVal = new uint[4];
