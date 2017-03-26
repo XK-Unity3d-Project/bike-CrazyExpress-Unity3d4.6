@@ -46,7 +46,19 @@ public class DianLiangCtrl : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void Update()
+	{
+		if (GlobalScript.GetInstance().player.Life <= 0) {
+			if (IsInvoking("ShowDianLiangShan")) {
+				CancelInvoke("ShowDianLiangShan");
+				Count = 0;
+				IsHandleYouMen = false;
+				DianLiangShan.SetActive(false);
+				DianLiangBack.enabled = false;
+			}
+			return;
+		}
+
 		if(GlobalScript.GetInstance().player.Energy > dianLiangValMin && IsInvoking("ShowDianLiangShan"))
 		{
 			Count = 50; //close ShowDianLiangShan

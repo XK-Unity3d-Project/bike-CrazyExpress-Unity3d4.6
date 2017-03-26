@@ -74,6 +74,8 @@ public class Jixuyouxi : MonoBehaviour {
 			qingtoubi.SetActive(false);
 			pcvr.StartLightStateP1 = LedState.Mie;
 			pcvr.OpenGameDongGan();
+			GlobalScript.GetInstance().player.Energy = (float)BufferKind.Dianchi;
+			GuidanceImg.OpenYouMenUI();
 		}
 	}
 	
