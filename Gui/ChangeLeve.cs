@@ -42,6 +42,17 @@ public class ChangeLeve : MonoBehaviour {
 	//private UISprite[] ui;
 	private bool finished;
 	static ChangeLeve _Instance;
+	public static void SetInstance(GameObject obj)
+	{
+		if (obj == null) {
+			return;
+		}
+		_Instance = obj.GetComponent<ChangeLeve>(); 
+	}
+	public static ChangeLeve GetInstance()
+	{
+		return _Instance;
+	}
 	// Use this for initialization
 	void Start()
 	{
@@ -222,7 +233,7 @@ public class ChangeLeve : MonoBehaviour {
 			return;
 		}
 		
-		if(!bIsClickStartBt)
+		if(!bIsClickStartBt || !Starts.activeSelf)
 		{
 			return;
 		}
@@ -235,7 +246,7 @@ public class ChangeLeve : MonoBehaviour {
 	}
 
 	float selectTime = 10.0f;
-	public bool bIsClickStartBt = false;
+	static bool bIsClickStartBt = false;
 	// Update is called once per frame
 	void Update ()
 	{
@@ -249,10 +260,11 @@ public class ChangeLeve : MonoBehaviour {
 			if (Mathf.Abs(hor) > 0.3f) {
 				if (SelectObj.activeSelf) {
 					SelectObj.SetActive(false);
-					Starts.SetActive(true);
+					StartCoroutine(DelayOpenStartBt());
+					//Starts.SetActive(true);
 					pcvr.StartLightStateP1 = LedState.Shan;
 				}
-				bIsClickStartBt = true;
+//				bIsClickStartBt = true;
 
 				if(hor > 0f)
 				{
@@ -288,7 +300,7 @@ public class ChangeLeve : MonoBehaviour {
 			if(timeDelay >= 0.5f && !bIsSelectLeve)
 			{
 				ScreenLog.Log("OnlineMode -> clickStartBt...");
-				bIsClickStartBt = true;
+//				bIsClickStartBt = true;
 				clickStartBt( 1 );
 			}
 		}
@@ -297,6 +309,13 @@ public class ChangeLeve : MonoBehaviour {
 	float timeDelay = 0.0f;
 	
 	NetCtrl NetCtrlScript;
+
+	public void TestInfoChangeLevel()
+	{
+		string strA = "startBtActive "+Starts.activeSelf+", isSelectLevel "+bIsSelectLeve
+			+", bIsClickStartBt "+bIsClickStartBt+", IsChangeGameLevel "+StartSenceChangeUI.IsChangeGameLevel;
+		GUI.Label(new Rect(10f, 50f, Screen.width, 30f), strA);
+	}
 
 	void clickStartBt(int key)
 	{
@@ -482,16 +501,41 @@ public class ChangeLeve : MonoBehaviour {
 		yield return new WaitForSeconds(3);
 	}
 
-	public static void ActiveSelectCityLevel()
+	/**
+	 * key == 0 -> 默认为第一个选择联机游戏的玩家.
+	 * key != 0 -> 默认为第一个之后选择联机游戏的玩家.
+	 */
+	public static void ActiveSelectCityLevel(int key = 0)
 	{
-		_Instance.OpenCityLevelUI();
+		if (_Instance == null || _Instance.gameObject.activeSelf) {
+			Debug.Log("ActiveSelectCityLevel -> Instance is null or gameObject is active! key == "+key);
+			if (key != 0) {
+				bIsClickStartBt = true; 
+			}
+			return;
+		}
+		
+		ChangeMode.GetInstance().HiddenChangeMode();
+		_Instance.gameObject.SetActive(true);
+		if (key == 0) {
+			_Instance.DaleyOpenCityLevelUI();
+		}
+		else {
+			bIsClickStartBt = true;
+		}
+	}
+
+	void DaleyOpenCityLevelUI()
+	{
+		Invoke("OpenCityLevelUI", 1.5f);
 	}
 
 	void OpenCityLevelUI()
 	{
-		Starts.SetActive(true);
+		StartCoroutine(DelayOpenStartBt()); //强制延时打开按键,避免联机游戏的关卡选择bug.
+		//Starts.SetActive(true);
 		pcvr.StartLightStateP1 = LedState.Shan;
-		bIsClickStartBt = true;
+		//bIsClickStartBt = true;
 
 		GlobalData.GetInstance().gameLeve = GameLeve.Leve1;
 		Leve1Hover.ResetToBeginning();
@@ -499,5 +543,15 @@ public class ChangeLeve : MonoBehaviour {
 		Leve2Hover.ResetToBeginning();
 		Leve2UnHover.ResetToBeginning();
 		SelectLeve();
+	}
+
+	IEnumerator DelayOpenStartBt()
+	{
+		if (Starts.activeSelf) {
+			yield break;
+		}
+		yield return new WaitForSeconds(2f);
+		Starts.SetActive(true);
+		bIsClickStartBt = true;
 	}
 }

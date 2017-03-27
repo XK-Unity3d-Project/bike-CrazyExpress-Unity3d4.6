@@ -19,9 +19,15 @@ public class ChangeMode : MonoBehaviour {
 
 	bool isChangeWait = false;
 	//private TweenRotation tween1;
+	static ChangeMode _Instance;
+	public static ChangeMode GetInstance()
+	{
+		return _Instance;
+	}
 
 	// Use this for initialization
 	void Start () {
+		_Instance = this;
 		IsClickModeStart = false;
 		GameTextVal = GlobalData.GetGameTextMode();
 		soloModeUI=soloMode.GetComponent<UISprite>() as UISprite;
@@ -145,7 +151,7 @@ public class ChangeMode : MonoBehaviour {
 	void ClickStartBtEvent(ButtonState val)
 	{
 		//ScreenLog.Log("ChangeMode::ClickStartBtEvent -> val " + val);
-		if(val == ButtonState.DOWN)
+		if(val == ButtonState.DOWN || !StartSenceChangeUI.IsChangeGameMode)
 		{
 			return;
 		}
@@ -224,5 +230,10 @@ public class ChangeMode : MonoBehaviour {
 			onlineUnHover.ResetToBeginning();
 			SelectMode();
 		}
+	}
+
+	public void HiddenChangeMode()
+	{
+		gameObject.SetActive(false);
 	}
 }

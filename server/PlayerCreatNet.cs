@@ -270,7 +270,8 @@ public class PlayerCreatNet : MonoBehaviour {
 		int num = 0;
 		int max = Network.connections.Length;
 		for (int i = 0; i < max; i++) {
-			if (player.ipAddress == NetCtrl.PlayerIpArray[i]) {
+			if (player.ipAddress == NetCtrl.PlayerIpArray[i]
+			    && player.port == NetCtrl.PlayerPortArray[i]) {
 				ScreenLog.Log("ipAddress "+player.ipAddress+", index "+i);
 				num = i;
 				isFindPlayer = true;

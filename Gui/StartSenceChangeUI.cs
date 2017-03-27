@@ -36,6 +36,7 @@ public class StartSenceChangeUI : MonoBehaviour {
 	void Start()
 	{
 		_Instance = this;
+		IsChangeGameMode = true;
 		IsChangeGameLevel = true;
 		GlobalData.GetInstance().gameMode = GameMode.None;
 		if(TouBiObj != null)
@@ -43,6 +44,7 @@ public class StartSenceChangeUI : MonoBehaviour {
 			TouBiScript = TouBiObj.GetComponent<Toubi>();
 		}
 		SelectObj.SetActive(false);
+		ChangeLeve.SetInstance(Leve);
 
 		if(GlobalData.GetInstance().IsFreeMode)
 		{
@@ -59,14 +61,13 @@ public class StartSenceChangeUI : MonoBehaviour {
 		if(!GlobalData.GetInstance().IsFreeMode)
 		{
 			Mode.SetActive(false);
-			Leve.SetActive(false);
 		}
 		else
 		{
 			SelectObj.SetActive(true);
 			Mode.SetActive(true);
-			Leve.SetActive(false);
 		}
+		Leve.SetActive(false);
 		StartCoroutine("Timer");
 
 		if(NetCtrlScript == null)
@@ -294,21 +295,33 @@ public class StartSenceChangeUI : MonoBehaviour {
 		LinkPlayerNameCtrl.GetInstance().ActivePlayerInfo();
 	}
 
+	public static bool IsChangeGameMode;
 	public static bool IsChangeGameLevel;
-	public void ActiveGameSelectObj(string ipInfo)
+	/**
+	 * ipInfo -> 第一个选择联机游戏的玩家IP信息.
+	 * port   -> 第一个选择联机游戏的玩家port信息.
+	 */
+	public void ActiveGameSelectObj(string ipInfo, int port)
 	{
 		if (!FreeModeCtrl.IsHavePlayerIp) {
 			return;
 		}
+		GlobalData.GetInstance().gameMode = GameMode.OnlineMode;//强制设置为联机模式游戏.
+		IsChangeGameMode = false;
 
-		ScreenLog.Log("ActiveGameSelectObj -> ipInfo "+ipInfo+", ipAddress "+Network.player.ipAddress);
-		if (ipInfo != Network.player.ipAddress) {
+		ScreenLog.Log("ActiveGameSelectObj -> ipInfo "+ipInfo+", ipAddress "+Network.player.ipAddress
+		              +", port "+port+", playerPort "+Network.player.port);
+		if (ipInfo != Network.player.ipAddress || Network.player.port != port) {
+			//该玩家不是第一个选择联机游戏的,不允许进行游戏关卡的选择.
+			IsChangeGameLevel = false;
+			ChangeLeve.ActiveSelectCityLevel(-1);
 			return;
 		}
-
+		
 		if (SelectObj.activeSelf) {
 			return;
 		}
+		//该玩家是第一个选择联机游戏的,允许进行游戏关卡的选择.
 		IsChangeGameLevel = true;
 		SelectObj.SetActive(true);
 		ChangeLeve.ActiveSelectCityLevel();
@@ -349,4 +362,10 @@ public class StartSenceChangeUI : MonoBehaviour {
 			}
 		}
 	}
+#if UNITY_EDITOR
+	void OnGUI()
+	{
+		ChangeLeve.GetInstance().TestInfoChangeLevel();
+	}
+#endif
 }

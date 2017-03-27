@@ -9,7 +9,7 @@ public class NetCtrl : MonoBehaviour {
 	public bool IsBackStartLevel = false;
 	public bool IsServerPort = false;
 	int _selectLinkCount = 0;
-	public int selectLinkCount// = 0;
+	public int selectLinkCount
 	{
 		set
 		{
@@ -113,6 +113,19 @@ public class NetCtrl : MonoBehaviour {
 		if (!IpList.Contains(ipInfo)) {
 			IpList.Add(ipInfo);
 		}
+
+		if (Network.peerType == NetworkPeerType.Server) {
+			if (Network.connections.Length < 2) { //至少有2个玩家连接服务器时,可以进行联机游戏.
+				return;
+			}
+		}
+		else {
+			//选择联机的玩家数量小于2人时,不允许进行联机游戏.
+			if (IpList.Count < 2) {
+				return;
+			}
+		}
+
 		selectLinkCount = IpList.Count;
 		NetworkServerNet.CountPlayerStatic = selectLinkCount;
 		CountLinkPlayer = selectLinkCount;
@@ -387,10 +400,12 @@ public class NetCtrl : MonoBehaviour {
 	}
 
 	public static string[] PlayerIpArray = new string[8];
+	public static int[] PlayerPortArray = new int[8];
 	public static void InitPlayerIpArray()
 	{
 		for (int i = 0; i < 8; i++) {
 			PlayerIpArray[i] = "";
+			PlayerPortArray[i] = -1;
 		}
 		ScreenLog.Log("InitPlayerIpArray...");
 	}
@@ -402,7 +417,9 @@ public class NetCtrl : MonoBehaviour {
 			int indexVal = lenVal - 1;
 			if (PlayerIpArray[indexVal] != player.ipAddress) {
 				PlayerIpArray[indexVal] = player.ipAddress;
-				ScreenLog.Log("OnPlayerConnectedServer -> ipAddress "+player.ipAddress+", index "+indexVal);
+				PlayerPortArray[indexVal] = player.port;
+				ScreenLog.Log("OnPlayerConnectedServer -> ipAddress "+player.ipAddress
+				              +", port "+player.port+", index "+indexVal);
 			}
 		}
 	}
@@ -436,16 +453,18 @@ public class NetCtrl : MonoBehaviour {
 			return;
 		}
 
-		if (Network.connections.Length < 1) {
+		//if (Network.connections.Length < 1) { //至少有1个玩家连接服务器时,可以进行联机游戏.
+		if (Network.connections.Length < 2) { //至少有2个玩家连接服务器时,可以进行联机游戏.
 			return;
 		}
 		string ipInfo = Network.connections[0].ipAddress;
-		networkView.RPC("NetCtrlSendHandleActiveGameSelectObj", RPCMode.OthersBuffered, ipInfo);
+		int port = Network.connections[0].port;
+		networkView.RPC("NetCtrlSendHandleActiveGameSelectObj", RPCMode.OthersBuffered, ipInfo, port);
 	}
 	
 	[RPC]
-	void NetCtrlSendHandleActiveGameSelectObj(string ipInfo)
+	void NetCtrlSendHandleActiveGameSelectObj(string ipInfo, int port)
 	{
-		StartSenceChangeUI.GetInstance().ActiveGameSelectObj(ipInfo);
+		StartSenceChangeUI.GetInstance().ActiveGameSelectObj(ipInfo, port);
 	}
 }
