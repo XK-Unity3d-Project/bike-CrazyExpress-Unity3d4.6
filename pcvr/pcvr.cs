@@ -1620,8 +1620,8 @@ QiNangArray[3]				QiNangArray[1]
 //	void OnGUI()
 //	{
 //		string strA = "playerTB "+InputEventCtrl.PlayerTB[0]+", TanBanDownCount "+TanBanDownCount
-//			+", QiNangArray[0] "+QiNangArray[0];
-//		GUI.Box(new Rect(0f, Screen.height - 30f, 400f, 30f), strA);
+//			+", QiNangArray[0] "+QiNangArray[0]+", zuLiInfo "+mBikeZuLiInfo.ToString("x2");
+//		GUI.Box(new Rect(0f, Screen.height - 30f, 800f, 30f), strA);
 //	}
 
 	public static float[] ShaCheLVal = new float[4];
