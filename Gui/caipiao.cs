@@ -212,13 +212,12 @@ public class caipiao : MonoBehaviour {
 		if(GlobalData.GetInstance().gameMode != GameMode.OnlineMode)
 		{
 			bike.resetBikeStaticInfo();
-			loadStartLevel();
 		}
 		else
 		{
 			bikeNetUnity.resetBikeStaticInfo();
-			Invoke("loadStartLevel", 3.0f);
 		}
+		Invoke("loadStartLevel", 3.0f);
 	}
 
 	public static void OnPlayerGameOver()
@@ -234,7 +233,7 @@ public class caipiao : MonoBehaviour {
 	void loadStartLevel()
 	{
 		XkGameCtrl.IsLoadingLevel = true;
-		System.GC.Collect();
+		//System.GC.Collect();
 		Application.LoadLevel( (int)GameLeve.Movie );
 	}
 

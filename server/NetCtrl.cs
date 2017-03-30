@@ -240,22 +240,6 @@ public class NetCtrl : MonoBehaviour {
 		}
 	}
 
-	public void MakeServerIntoMove()
-	{
-		networkView.RPC("SendOnPlayerIntoSetPanel", RPCMode.AllBuffered);
-	}
-
-	[RPC]
-	void SendOnPlayerIntoSetPanel()
-	{
-		//ScreenLog.Log("SendOnPlayerIntoSetPanel...");
-		if(Network.isServer && (Application.loadedLevel == (int)GameLeve.Leve3 || Application.loadedLevel == (int)GameLeve.Leve4))
-		{
-			XkGameCtrl.IsLoadingLevel = true;
-			Application.LoadLevel( (int)GameLeve.Movie );
-		}
-	}
-
 	int playerLeaveCount = 0;
 	public void OnPlayerLeaveGame()
 	{
@@ -403,6 +387,8 @@ public class NetCtrl : MonoBehaviour {
 	public static int[] PlayerPortArray = new int[8];
 	public static void InitPlayerIpArray()
 	{
+		PlayerIpArray = new string[8];
+		PlayerPortArray = new int[8];
 		for (int i = 0; i < 8; i++) {
 			PlayerIpArray[i] = "";
 			PlayerPortArray[i] = -1;

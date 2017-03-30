@@ -76,12 +76,4 @@ public class SetPanelCtrl : MonoBehaviour {
 		System.GC.Collect();
 		Application.LoadLevel( (int)GameLeve.SetPanel );
 	}
-
-	void loadMoveLevel()
-	{
-		//ScreenLog.Log("SetPanelCtrl -> loadMoveLevel");
-		XkGameCtrl.IsLoadingLevel = true;
-		System.GC.Collect();
-		Application.LoadLevel( (int)GameLeve.Movie );
-	}
 }

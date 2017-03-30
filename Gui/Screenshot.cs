@@ -34,9 +34,9 @@ public class Screenshot : MonoBehaviour {
 
 	void IsPassChange()
 	{
-		if (pcvr.bIsHardWare) {
-			MyCOMDevice.GetInstance().ForceRestartComPort();
-		}
+//		if (pcvr.bIsHardWare) {
+//			MyCOMDevice.GetInstance().ForceRestartComPort();
+//		}
 
 		pcvr.CloseGameDongGan();
 		if(!isPlayPaiZhao)
