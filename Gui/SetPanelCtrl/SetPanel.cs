@@ -287,40 +287,42 @@ public class SetPanel : MonoBehaviour {
 			return;
 		}
 
-		if(Time.frameCount % 100 != 0) {
+		if(Time.frameCount % 20 != 0) {
 			return;
 		}
 
-		int speed = (int) (75 * (pcvr.mMouseDownCount / 1500f));
-		suDuNumLabel.text = speed.ToString();
-		if(!isShowZuLi && speed > 0) {
+		PlayerTaBanSpeed = (int) (75 * (pcvr.mMouseDownCount / 1500f));
+		suDuNumLabel.text = PlayerTaBanSpeed.ToString();
+		if(!isShowZuLi && PlayerTaBanSpeed > 10) {
 			isShowZuLi = true;
-			StartCoroutine( openZuLiCheck() );
+			if (!IsOpenZuLiCheck) {
+				IsOpenZuLiCheck = true;
+				StartCoroutine( openZuLiCheck() );
+			}
 		}
 	}
 
-	int ZuLiState;
+	int PlayerTaBanSpeed;
+	bool IsOpenZuLiCheck;
 	IEnumerator openZuLiCheck()
 	{
-		if(!isShowZuLi)
-		{
+		if(!isShowZuLi) {
 			pcvr.GetInstance().CloseBikeZuLi();
 			//Debug.Log("stop zuli check");
 			yield break;
 		}
 
-		ZuLiState++;
-		if (ZuLiState % 2 == 0) {
+		if (PlayerTaBanSpeed > 10) {
 			pcvr.GetInstance().OpenBikeZuLi();
 			ZuLiOpenObj.SetActive(true);
 			ZuLiCloseObj.SetActive(false);
-			yield return new WaitForSeconds( 8f );
+			yield return new WaitForSeconds( 1f );
 		}
 		else {
 			pcvr.GetInstance().CloseBikeZuLi();
 			ZuLiOpenObj.SetActive(false);
 			ZuLiCloseObj.SetActive(true);
-			yield return new WaitForSeconds( 2f );
+			yield return new WaitForSeconds( 1f );
 		}
 		yield return StartCoroutine( openZuLiCheck() );
 	}
@@ -617,6 +619,7 @@ public class SetPanel : MonoBehaviour {
 			StarTran.localPosition = new Vector3(35f, 10f, 0f);
 			break;
 		case GameSetEnum.YouMenCS:
+			pcvr.ResetBikeZuLiInfo();
 			StarTran.localPosition = new Vector3(35f, -20f, 0f);
 			break;
 		case GameSetEnum.KaiShiLEDCS:
@@ -968,6 +971,9 @@ public class SetPanel : MonoBehaviour {
 				isShowZuLi = false;
 				isCanClickMoveBt = true;
 				SuDuCheck.SetActive(false);
+				StopCoroutine( openZuLiCheck() );
+				pcvr.ResetBikeZuLiInfo();
+				IsOpenZuLiCheck = false;
 			}
 			else {
 				isCanClickMoveBt = false;
@@ -1076,6 +1082,7 @@ public class SetPanel : MonoBehaviour {
 	void Start ()
 	{
 		_Instance = this;
+		pcvr.ResetBikeZuLiInfo();
 		fileName = GlobalData.fileName;
 		XkGameCtrl.IsLoadingLevel = false;
 		pcvr.OpenGameDongGan();

@@ -15,7 +15,7 @@ public class pcvr : MonoBehaviour {
 	public static bool IsTestBianMaQi = false;
 	public static int mBikeBrakeState = 0;
 	public static int mBikeZuLiState = 1;
-	public static int mBikeZuLiInfo = 0x11;
+	public static int mBikeZuLiInfo = 0x00;
 	bool IsMovePlaneBikeHead = false;
 	public static bool IsHitJianSuDai = false;
 	public static bool IsJiaoYanHid;
@@ -118,6 +118,12 @@ public class pcvr : MonoBehaviour {
 		CheckBikeZuLiInfo( zuLiState );
 	}
 
+
+	/**
+	 * ZuLiJiGou == 0 -> 自行车阻力采用电磁阀机制控制阻力.
+	 * ZuLiJiGou == 1 -> 自行车阻力采用电机逆向原理控制阻力.
+	 */
+	byte ZuLiJiGou = 1;
 	void CheckBikeZuLiInfo( int zuLiState )
 	{
 		if (HardwareCheckCtrl.IsTestHardWare) {
@@ -126,11 +132,22 @@ public class pcvr : MonoBehaviour {
 
 		int min = 0x11;
 		int max = 0x33;
-		int baseVal = (max - min) / 10;
-		
+		switch(ZuLiJiGou) {
+		case 1:
+			min = 0xe4;
+			max = 0xf4;
+			break;
+		}
+
+		int baseVal = (max - min) / 10; //注意max和min的差值一定要大于被除数,否则baseVal始终为0.
 		int ZuLiDengJi = GlobalData.GetInstance().BikeZuLiDengJi;
 		zuLiState += ZuLiDengJi;
 		mBikeZuLiInfo = zuLiState * baseVal + min;
+	}
+
+	public static void ResetBikeZuLiInfo()
+	{
+		mBikeZuLiInfo = 0x00;
 	}
 
 	//ZuLiCeShi
@@ -142,7 +159,9 @@ public class pcvr : MonoBehaviour {
 
 	public void CloseBikeZuLi()
 	{
-		StartCoroutine( SetBikeZuLiInfo( 1 ) );
+		StopCoroutine(SetBikeZuLiInfo( 1 ));
+		mBikeZuLiInfo = 0x00;
+		//StartCoroutine( SetBikeZuLiInfo( 1 ) );
 	}
 
 	//主角进入土路.
@@ -708,12 +727,9 @@ QiNangArray[3]				QiNangArray[1]
 		}
 		else {
 			if (Application.loadedLevel == (int)GameLeve.Movie) {
-				buffer[9] = 0x11;
-				mBikeZuLiInfo = 0x11;
+				mBikeZuLiInfo = 0x00;
 			}
-			else {
-				buffer[9] = (byte)mBikeZuLiInfo;
-			}
+			buffer[9] = (byte)mBikeZuLiInfo;
 		}
 
 		buffer[6] = 0x00;
@@ -1385,7 +1401,7 @@ QiNangArray[3]				QiNangArray[1]
 			}
 			
 			fangXiangValTmp = Mathf.Clamp(fangXiangValTmp, -1f, 1f);
-			fangXiangValTmp = Mathf.Abs(fangXiangValTmp) <= 0.05f ? 0f : fangXiangValTmp;
+			fangXiangValTmp = Mathf.Abs(fangXiangValTmp) <= 0.15f ? 0f : fangXiangValTmp;
 			InputEventCtrl.PlayerFX[i] = fangXiangValTmp;
 		}
 	}
@@ -1622,7 +1638,7 @@ QiNangArray[3]				QiNangArray[1]
 
 	void OnGUI()
 	{
-		string strA = "PlayerFX "+InputEventCtrl.PlayerFX[0]+", zuLiInfo "+mBikeZuLiInfo.ToString("x2");
+		string strA = "PlayerFX "+InputEventCtrl.PlayerFX[0].ToString("f2")+", zuLiInfo "+mBikeZuLiInfo.ToString("x2");
 		GUI.Box(new Rect(0f, Screen.height - 30f, 800f, 30f), strA);
 	}
 
