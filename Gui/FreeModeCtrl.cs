@@ -92,6 +92,8 @@ public class FreeModeCtrl : MonoBehaviour {
 
 //	public static int ServerScreenW = 800;
 //	public static int ServerScreenH = 600;
+	public static int ClientScreenW = 1360;
+	public static int ClientScreenH = 768;
 	public static int ServerScreenW = 1360;
 	public static int ServerScreenH = 768;
 	static bool IsTestXiaoScreen = false;
@@ -130,6 +132,9 @@ public class FreeModeCtrl : MonoBehaviour {
 		uint SWP = SWP_DRAWFRAME | SWP_DEFERERASE | SWP_FRAMECHANGED | SWP_SHOWWINDOW;
 		SWP = SWP_SHOWWINDOW;
 		//SetWindowPos(m_hWnd, 0, iScreenW, 0, iScreenW, iScreenH, SWP); //修改窗口置全屏
+		if (iScreenW != ServerScreenW) {
+			ServerScreenW = iScreenW;
+		}
 		SetWindowPos(m_hWnd, 0, iScreenW, 0, ServerScreenW, ServerScreenH, SWP); //修改窗口置全屏
 		//SetWindowPos(m_hWnd, 0, 0, 0, 800, 600, SWP); //修改窗口置全屏
 		
@@ -211,8 +216,8 @@ public class FreeModeCtrl : MonoBehaviour {
 	void CheckIsFullScreen()
 	{
 		if(!IsServer) {
-			if(Screen.width != 1360 || !Screen.fullScreen) {
-				Screen.SetResolution(1360, 768, true);
+			if(Screen.width != ClientScreenW || !Screen.fullScreen) {
+				Screen.SetResolution(ClientScreenW, 768, true);
 			}
 		}
 	}
@@ -234,6 +239,14 @@ public class FreeModeCtrl : MonoBehaviour {
 	// Use this for initialization
 	void Awake ()
 	{
+		if (!IsServerPort) {
+			int screenW = GetSystemMetrics(SM_CXSCREEN);
+			if (screenW != ClientScreenW) {
+				ClientScreenW = screenW;
+				Debug.Log("ClientScreenW "+ClientScreenW);
+			}
+		}
+
 		ChangeMode.IsClickModeStart = false;
 		CheckIsHavePlayerIp();
 		//pcvr.ResetPlayerBianMaQiMaxVal();
@@ -288,7 +301,7 @@ public class FreeModeCtrl : MonoBehaviour {
 					    || (CountOpenServer == 1 && GlobalData.GetInstance().LinkModeState == 1)) {
 
 						if (IsHavePlayerIp) {
-							Screen.SetResolution(1360, 768, false);
+							Screen.SetResolution(ClientScreenW, 768, false);
 							ChangeClientPortWindow();
 						}
 					}

@@ -105,6 +105,19 @@ public class GlobalData  {
 				value = 0;
 				handleJsonObj.WriteToFileXml(fileName, "LinkModeState", value.ToString());
 			}
+
+			readInfo = handleJsonObj.ReadFromFileXml(fileName, "BikeZuLiDengJi");
+			if (readInfo == null || readInfo == "") {
+				readInfo = "5";
+				handleJsonObj.WriteToFileXml(fileName, "BikeZuLiDengJi", readInfo);
+			}
+			
+			value = Convert.ToInt32(readInfo);
+			if (value < 0 || value > 10) {
+				value = 5;
+				handleJsonObj.WriteToFileXml(fileName, "BikeZuLiDengJi", value.ToString());
+			}
+			Instance.BikeZuLiDengJi = value;
 			//value = 1; //test.
 			//Debug.Log("**************** isServer "+FreeModeCtrl.IsServer);
 			if (FreeModeCtrl.IsServer) {

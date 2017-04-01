@@ -120,6 +120,10 @@ public class pcvr : MonoBehaviour {
 
 	void CheckBikeZuLiInfo( int zuLiState )
 	{
+		if (HardwareCheckCtrl.IsTestHardWare) {
+			return;
+		}
+
 		int min = 0x11;
 		int max = 0x33;
 		int baseVal = (max - min) / 10;
@@ -705,6 +709,7 @@ QiNangArray[3]				QiNangArray[1]
 		else {
 			if (Application.loadedLevel == (int)GameLeve.Movie) {
 				buffer[9] = 0x11;
+				mBikeZuLiInfo = 0x11;
 			}
 			else {
 				buffer[9] = (byte)mBikeZuLiInfo;
@@ -1607,7 +1612,6 @@ QiNangArray[3]				QiNangArray[1]
 			}
 		}
 
-		//InputEventCtrl.PlayerTB[0] = TestTBVal;
 		if (InputEventCtrl.PlayerTB[0] > 0f) {
 			TanBanDownCount = 1.8f * 9500f * InputEventCtrl.PlayerTB[0];
 		}
@@ -1616,13 +1620,11 @@ QiNangArray[3]				QiNangArray[1]
 		}
 	}
 
-	//[Range(0f, 1f)]public float TestTBVal = 0f;
-//	void OnGUI()
-//	{
-//		string strA = "playerTB "+InputEventCtrl.PlayerTB[0]+", TanBanDownCount "+TanBanDownCount
-//			+", QiNangArray[0] "+QiNangArray[0]+", zuLiInfo "+mBikeZuLiInfo.ToString("x2");
-//		GUI.Box(new Rect(0f, Screen.height - 30f, 800f, 30f), strA);
-//	}
+	void OnGUI()
+	{
+		string strA = "PlayerFX "+InputEventCtrl.PlayerFX[0]+", zuLiInfo "+mBikeZuLiInfo.ToString("x2");
+		GUI.Box(new Rect(0f, Screen.height - 30f, 800f, 30f), strA);
+	}
 
 	public static float[] ShaCheLVal = new float[4];
 	public static uint[] ShaCheLCurVal = new uint[4];

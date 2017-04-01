@@ -207,7 +207,7 @@ public class SetPanel : MonoBehaviour {
 	int zuLiDengJi = 3;
 	void InitBikeZuLiDengJi()
 	{
-		zuLiDengJi = 5;
+		zuLiDengJi = GlobalData.GetInstance().BikeZuLiDengJi - 1;
 		setBikeZuLiDengJi();
 	}
 
@@ -226,6 +226,7 @@ public class SetPanel : MonoBehaviour {
 
 		ZuLiInfo.text = zuLiDengJi.ToString();
 		GlobalData.GetInstance().BikeZuLiDengJi = zuLiDengJi;
+		handleJsonObj.WriteToFileXml(fileName, "BikeZuLiDengJi", zuLiDengJi.ToString());
 	}
 
 	int GameDiffVal;
@@ -313,13 +314,14 @@ public class SetPanel : MonoBehaviour {
 			pcvr.GetInstance().OpenBikeZuLi();
 			ZuLiOpenObj.SetActive(true);
 			ZuLiCloseObj.SetActive(false);
+			yield return new WaitForSeconds( 8f );
 		}
 		else {
 			pcvr.GetInstance().CloseBikeZuLi();
 			ZuLiOpenObj.SetActive(false);
 			ZuLiCloseObj.SetActive(true);
+			yield return new WaitForSeconds( 2f );
 		}
-		yield return new WaitForSeconds( 2f );
 		yield return StartCoroutine( openZuLiCheck() );
 	}
 
