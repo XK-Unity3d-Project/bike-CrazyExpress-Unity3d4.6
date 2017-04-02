@@ -26,6 +26,7 @@ public class GameOver : MonoBehaviour {
 	{
 		go.SetActive(false);
 		GlobalScript.GetInstance().player.IsPass=true;
+		pcvr.ResetBikeZuLiInfo();
 		Rank.GetInstance().HiddenRankList();
 
 		pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, 0.0f, 0.0f);

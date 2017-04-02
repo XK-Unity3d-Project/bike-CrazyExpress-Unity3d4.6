@@ -3669,6 +3669,7 @@ public class bikeNetUnity : MonoBehaviour {
 		activeChangeCamPosEvent( BikeCamEvent.GameOver );
 		
 		GlobalScript.GetInstance().player.IsPass = true;
+		pcvr.ResetBikeZuLiInfo();
 		GlobalScript.GetInstance().player.FinalRank = rankNum;
 		if(IsHitJianSuDai)
 		{

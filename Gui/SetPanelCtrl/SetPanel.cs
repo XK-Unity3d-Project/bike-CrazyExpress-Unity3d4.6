@@ -213,7 +213,7 @@ public class SetPanel : MonoBehaviour {
 
 	void ResetBikeZuLiDengJi()
 	{
-		zuLiDengJi = -1;
+		zuLiDengJi = 4;
 		setBikeZuLiDengJi();
 	}
 
@@ -542,6 +542,10 @@ public class SetPanel : MonoBehaviour {
 		SetGameLinkMode("0");
 		setGameText(GameTextType.Chinese);
 		ResetBikeZuLiDengJi();
+		
+		GameAudioVolume = 7;
+		GameAudioVolumeLB.text = GameAudioVolume.ToString();
+		GlobalData.GetInstance().WriteGameAudioVolume(GameAudioVolume);
 
 		GlobalData.GetInstance().Icon = 0;
 		pcvr.GetInstance().SubPlayerCoin(CoinNumPlayer);

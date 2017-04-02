@@ -208,15 +208,12 @@ public class FreeModeCtrl : MonoBehaviour {
 		//ScreenLog.Log("ChangeWindowPos..." + Screen.width + " " + Screen.height);
 	}
 
-	void makeGameFullScreen()
-	{
-		Screen.fullScreen = true;
-	}
-
+	static bool IsCheckFullScreen = true;
 	void CheckIsFullScreen()
 	{
-		if(!IsServer) {
+		if(!IsServer && IsCheckFullScreen) {
 			if(Screen.width != ClientScreenW || !Screen.fullScreen) {
+				IsCheckFullScreen = false;
 				Screen.SetResolution(ClientScreenW, 768, true);
 			}
 		}
@@ -236,6 +233,7 @@ public class FreeModeCtrl : MonoBehaviour {
 	
 	string ServerIpInfo = "";
 	public static bool IsHavePlayerIp;
+	static bool IsShowScreenInfo;
 	// Use this for initialization
 	void Awake ()
 	{
@@ -244,6 +242,10 @@ public class FreeModeCtrl : MonoBehaviour {
 			int screenW = GetSystemMetrics(SM_CXSCREEN);
 			if (screenW != ClientScreenW) {
 				ClientScreenW = screenW;
+			}
+
+			if (!IsShowScreenInfo) {
+				IsShowScreenInfo = true;
 				Debug.Log("ClientScreenW "+ClientScreenW);
 			}
 		}
@@ -434,7 +436,7 @@ public class FreeModeCtrl : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
 	{
-		if (!IsTestXiaoScreen && !IsServerPort && Time.frameCount % 300 == 0) {
+		if (!IsTestXiaoScreen && !IsServerPort && Time.frameCount % 300 == 0 && IsCheckFullScreen) {
 			if ((IsHavePlayerIp && ServerIpInfo != Network.player.ipAddress) || !IsHavePlayerIp) {
 				CheckIsFullScreen();
 			}

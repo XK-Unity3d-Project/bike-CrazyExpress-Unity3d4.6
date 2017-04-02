@@ -3482,6 +3482,7 @@ public class bike : MonoBehaviour {
 		yield return new WaitForSeconds( 2f );
 
 		GlobalScript.GetInstance().player.IsPass = true;
+		pcvr.ResetBikeZuLiInfo();
 		GlobalScript.GetInstance().player.FinalRank = rankNum;
 		if(IsHitJianSuDai)
 		{

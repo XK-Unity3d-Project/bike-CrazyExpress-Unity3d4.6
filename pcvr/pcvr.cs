@@ -98,7 +98,7 @@ public class pcvr : MonoBehaviour {
 		int dZuLi = Mathf.Abs(zuLiState - mBikeZuLiState);
 		while(dZuLi > 1)
 		{
-			////ScreenLog.Log("dZuLi " + dZuLi + ", zuLiState " + zuLiState + ", mBikeZuLiState " + mBikeZuLiState);
+			//ScreenLog.Log("dZuLi " + dZuLi + ", zuLiState " + zuLiState + ", mBikeZuLiState " + mBikeZuLiState);
 			if(zuLiState > mBikeZuLiState)
 			{
 				mBikeZuLiState++;
@@ -134,15 +134,50 @@ public class pcvr : MonoBehaviour {
 		int max = 0x33;
 		switch(ZuLiJiGou) {
 		case 1:
-			min = 0xe4;
-			max = 0xf4;
+			min = 0x30;
+			max = 0x44;
 			break;
 		}
 
-		int baseVal = (max - min) / 10; //注意max和min的差值一定要大于被除数,否则baseVal始终为0.
-		int ZuLiDengJi = GlobalData.GetInstance().BikeZuLiDengJi;
-		zuLiState += ZuLiDengJi;
-		mBikeZuLiInfo = zuLiState * baseVal + min;
+		if (Application.loadedLevel == (int)GameLeve.Leve1 || Application.loadedLevel == (int)GameLeve.Leve2
+		    || Application.loadedLevel == (int)GameLeve.Leve3 || Application.loadedLevel == (int)GameLeve.Leve4) {
+			if (InputEventCtrl.PlayerTB[0] <= 0.1f
+			    || GlobalScript.GetInstance().player.IsPass
+			    || Mathf.Abs((float)BianMaQiCurVal[0] - 30000) < 100f
+			    || GlobalScript.GetInstance().player.Life <= 0) {
+				mBikeZuLiInfo = 0x00;
+				return;
+			}
+		}
+
+		float baseVal = (float)(max - min) / 10f; //注意max和min的差值一定要大于被除数,否则baseVal始终为0.
+		int zuLiDengJi = GlobalData.GetInstance().BikeZuLiDengJi;
+		int zuLiVal = 0;
+		switch (ZuLiJiGou) {
+		case 0:
+			zuLiState += zuLiDengJi;
+			zuLiVal = (int)(baseVal * zuLiState + min);
+			break;
+		case 1:
+			if (zuLiDengJi <= 7) {
+				min = 0x30;
+				max = 0x3e;
+			}
+			else {
+				min = 0x94;
+				max = 0xb7;
+			}
+			zuLiVal = (int)((baseVal * zuLiState) + (zuLiDengJi * (max - min)) + min);
+			break;
+		}
+
+		if (zuLiVal < min) {
+			zuLiVal = min;
+		}
+		if (zuLiVal > 0xff) {
+			zuLiVal = 0xff;
+		}
+		mBikeZuLiInfo = zuLiVal;
 	}
 
 	public static void ResetBikeZuLiInfo()
@@ -1605,7 +1640,7 @@ QiNangArray[3]				QiNangArray[1]
 					//编码器（脚踏板）正接.
 					/*if (BianMaQiMaxVal[i] < bianMaQiCurVal) {
 					BianMaQiMaxVal[i] = bianMaQiCurVal;
-				}*/
+					}*/
 					if (bianMaQiCurVal < BianMaQiMinVal[i]) {
 						bianMaQiCurVal = BianMaQiMinVal[i];
 					}
@@ -1615,7 +1650,7 @@ QiNangArray[3]				QiNangArray[1]
 					//编码器（脚踏板）反接.
 					/*if (BianMaQiMaxVal[i] > bianMaQiCurVal) {
 					BianMaQiMaxVal[i] = bianMaQiCurVal;
-				}*/
+					}*/
 					if (bianMaQiCurVal > BianMaQiMinVal[i]) {
 						bianMaQiCurVal = BianMaQiMinVal[i];
 					}
@@ -1623,7 +1658,7 @@ QiNangArray[3]				QiNangArray[1]
 				}
 				bianMaQiInput = Mathf.Clamp01(bianMaQiInput);
 				bianMaQiInput = bianMaQiInput < 0.01f ? 0f : bianMaQiInput;
-				//			BianMaQiVal[i] = bianMaQiInput;
+				//BianMaQiVal[i] = bianMaQiInput;
 				InputEventCtrl.PlayerTB[i] = bianMaQiInput;
 			}
 		}
@@ -1638,7 +1673,10 @@ QiNangArray[3]				QiNangArray[1]
 
 	void OnGUI()
 	{
-		string strA = "PlayerFX "+InputEventCtrl.PlayerFX[0].ToString("f2")+", zuLiInfo "+mBikeZuLiInfo.ToString("x2");
+		string strA = "PlayerFX "+InputEventCtrl.PlayerFX[0].ToString("f2")
+			+", PlayerTB "+InputEventCtrl.PlayerTB[0].ToString("f2")
+			+", bianMaQi "+BianMaQiCurVal[0]
+			+", zuLiInfo "+mBikeZuLiInfo.ToString("x2");
 		GUI.Box(new Rect(0f, Screen.height - 30f, 800f, 30f), strA);
 	}
 

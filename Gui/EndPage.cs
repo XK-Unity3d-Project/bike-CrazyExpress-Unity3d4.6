@@ -6,9 +6,15 @@ public class EndPage : MonoBehaviour {
 	private Vector3 dre;
 	public float duation=1;
 	private Vector3 roa;
+	static EndPage _Instance;
+	public static EndPage GetInstance()
+	{
+		return _Instance;
+	}
 
 	void Awake()
 	{
+		_Instance = this;
 		GlobalScript.GetInstance ().ShowEndPageEvent += ShowEndPageEvent;
 	}
 
