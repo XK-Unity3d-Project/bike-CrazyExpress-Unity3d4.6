@@ -94,6 +94,7 @@ public class GlobalData  {
 			}
 			GameAudioVolume = value;
 
+			//开始设置联机游戏状态参数.
 			readInfo = handleJsonObj.ReadFromFileXml(fileName, "LinkModeState");
 			if (readInfo == null || readInfo == "") {
 				readInfo = "0";
@@ -105,6 +106,17 @@ public class GlobalData  {
 				value = 0;
 				handleJsonObj.WriteToFileXml(fileName, "LinkModeState", value.ToString());
 			}
+
+			/**
+			 * 此处代码必须放在这里,它是用来设定游戏是否为联机状态的控制接口.
+			 */
+			if (FreeModeCtrl.IsServer) {
+				Instance.LinkModeState = 0;
+			}
+			else {
+				Instance.LinkModeState = value;
+			}
+			//结束设置联机参数.
 
 			readInfo = handleJsonObj.ReadFromFileXml(fileName, "BikeZuLiDengJi");
 			if (readInfo == null || readInfo == "") {
@@ -118,14 +130,6 @@ public class GlobalData  {
 				handleJsonObj.WriteToFileXml(fileName, "BikeZuLiDengJi", value.ToString());
 			}
 			Instance.BikeZuLiDengJi = value;
-			//value = 1; //test.
-			//Debug.Log("**************** isServer "+FreeModeCtrl.IsServer);
-			if (FreeModeCtrl.IsServer) {
-				Instance.LinkModeState = 0;
-			}
-			else {
-				Instance.LinkModeState = value;
-			}
 		}
 		return Instance;
 	}

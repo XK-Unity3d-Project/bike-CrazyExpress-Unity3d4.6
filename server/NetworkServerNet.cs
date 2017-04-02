@@ -26,6 +26,7 @@ public class NetworkServerNet : MonoBehaviour {
 
 	void Start()
 	{
+		FreeModeCtrl.CheckIsHavePlayerIp();
 		if (FreeModeCtrl.IsServer) {
 			bIsLinkServer = true;
 		}

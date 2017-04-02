@@ -237,6 +237,7 @@ public class FreeModeCtrl : MonoBehaviour {
 	// Use this for initialization
 	void Awake ()
 	{
+		IsTestXiaoScreen = pcvr.IsTestXiaoScreen;
 		pcvr.ResetBikeZuLiInfo();
 		if (!IsServerPort) {
 			int screenW = GetSystemMetrics(SM_CXSCREEN);

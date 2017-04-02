@@ -7,6 +7,7 @@ using System.IO;
 
 public class pcvr : MonoBehaviour {
 	static public bool bIsHardWare = true;
+	public static bool IsTestXiaoScreen = false;
 	/**
 	 * IsTestGetInput == true  -> 用键盘鼠标信息.
 	 * IsTestGetInput == false -> 用硬件IO板信息.
