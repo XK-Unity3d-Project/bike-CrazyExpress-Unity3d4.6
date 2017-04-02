@@ -108,7 +108,7 @@ public class MyCOMDevice : MonoBehaviour
 					Thread.Sleep(100);
 				}
 				else {
-					Thread.Sleep(25);
+					Thread.Sleep(20);
 				}
 
 				COMRxData();
@@ -116,7 +116,7 @@ public class MyCOMDevice : MonoBehaviour
 					Thread.Sleep(100);
 				}
 				else {
-					Thread.Sleep(25);
+					Thread.Sleep(20);
 				}
 				IsTestWRPer = true;
 			}
