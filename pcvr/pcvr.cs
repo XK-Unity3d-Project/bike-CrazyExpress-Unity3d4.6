@@ -326,7 +326,7 @@ public class pcvr : MonoBehaviour {
 	// Update is called once per frame
 	void Update()
 	{
-		if (XkGameCtrl.IsLoadingLevel) {
+		if (XkGameCtrl.IsLoadingLevel || FreeModeCtrl.IsServer) {
 			return;
 		}
 
@@ -343,13 +343,32 @@ public class pcvr : MonoBehaviour {
 				return;
 			}
 		}
-		else {
-			if (dTime < 0.03f) {
+//		else {
+//			if (dTime < 0.03f) {
+//				return;
+//			}
+//		}
+		lastUpTime = Time.realtimeSinceStartup;
+		
+		SendMessage();
+		GetMessage();
+	}
+
+	void FixedUpdate()
+	{
+		if (XkGameCtrl.IsLoadingLevel || FreeModeCtrl.IsServer) {
+			return;
+		}
+
+		if (!bIsHardWare) {
+			return;
+		}
+
+		if (IsJiaoYanHid) {
+			if (Time.frameCount % 5 !=  0) {
 				return;
 			}
 		}
-		lastUpTime = Time.realtimeSinceStartup;
-		
 		SendMessage();
 		GetMessage();
 	}
@@ -1438,6 +1457,9 @@ QiNangArray[3]				QiNangArray[1]
 			
 			fangXiangValTmp = Mathf.Clamp(fangXiangValTmp, -1f, 1f);
 			fangXiangValTmp = Mathf.Abs(fangXiangValTmp) <= 0.15f ? 0f : fangXiangValTmp;
+			if (Network.player.ipAddress == NetworkServerNet.ServerPortIP) {
+				fangXiangValTmp = Mathf.Abs(fangXiangValTmp) <= 0.18f ? 0f : fangXiangValTmp;
+			}
 			InputEventCtrl.PlayerFX[i] = fangXiangValTmp;
 		}
 	}
@@ -1672,6 +1694,7 @@ QiNangArray[3]				QiNangArray[1]
 		}
 	}
 
+#if UNITY_EDITOR
 	void OnGUI()
 	{
 		string strA = "PlayerFX "+InputEventCtrl.PlayerFX[0].ToString("f2")
@@ -1680,6 +1703,7 @@ QiNangArray[3]				QiNangArray[1]
 			+", zuLiInfo "+mBikeZuLiInfo.ToString("x2");
 		GUI.Box(new Rect(0f, Screen.height - 30f, 800f, 30f), strA);
 	}
+#endif
 
 	public static float[] ShaCheLVal = new float[4];
 	public static uint[] ShaCheLCurVal = new uint[4];
