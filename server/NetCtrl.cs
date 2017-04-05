@@ -78,7 +78,7 @@ public class NetCtrl : MonoBehaviour {
 			return;
 		}
 		StopCoroutine( "handleSelectLinkCount" );
-		StartCoroutine( "handleSelectLinkCount", isAdd );
+		StartCoroutine( handleSelectLinkCount(isAdd) );
 	}
 
 	public IEnumerator handleSelectLinkCount(bool isAdd)

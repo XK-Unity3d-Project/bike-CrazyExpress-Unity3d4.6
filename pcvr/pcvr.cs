@@ -1456,9 +1456,11 @@ QiNangArray[3]				QiNangArray[1]
 			}
 			
 			fangXiangValTmp = Mathf.Clamp(fangXiangValTmp, -1f, 1f);
-			fangXiangValTmp = Mathf.Abs(fangXiangValTmp) <= 0.15f ? 0f : fangXiangValTmp;
 			if (Network.player.ipAddress == NetworkServerNet.ServerPortIP) {
-				fangXiangValTmp = Mathf.Abs(fangXiangValTmp) <= 0.18f ? 0f : fangXiangValTmp;
+				fangXiangValTmp = Mathf.Abs(fangXiangValTmp) <= 0.14f ? 0f : fangXiangValTmp;
+			}
+			else {
+				fangXiangValTmp = Mathf.Abs(fangXiangValTmp) <= 0.15f ? 0f : fangXiangValTmp;
 			}
 			InputEventCtrl.PlayerFX[i] = fangXiangValTmp;
 		}

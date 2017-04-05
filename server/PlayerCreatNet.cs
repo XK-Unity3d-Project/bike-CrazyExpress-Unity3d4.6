@@ -239,7 +239,9 @@ public class PlayerCreatNet : MonoBehaviour {
 		}
 
 		Transform npcTran = null;
-		int max = spawnNPCTran.Length - NetCtrl.CountLinkPlayer + 1;
+		//当玩家选择联机,在切回一次单机,之后玩家进入联机游戏时,在服务器产生npc时就会多产生一个的bug.
+		//int max = spawnNPCTran.Length - NetCtrl.CountLinkPlayer + 1;
+		int max = spawnNPCTran.Length - Network.connections.Length + 1;
 		for(int index = 0; index < max; index++)
 		{
 			npcTran = (Transform)Network.Instantiate(npcPrefab[index], spawnNPCTran[index].position,
