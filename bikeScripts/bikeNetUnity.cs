@@ -131,7 +131,7 @@ public class bikeNetUnity : MonoBehaviour {
 	
 	private bool bIsMixAction = false;
 	private float mSteerTimeCur = 0f;
-	private float maxSteerTime = 5f;
+	private float maxSteerTime = 1f;
 	
 	private bool bIsDoFly = false;
 	private string mRankingPlayer = "rankingPlayer";
@@ -1166,9 +1166,15 @@ public class bikeNetUnity : MonoBehaviour {
 
 		if(!bIsIntoFeiBan && !bIsDoFly)
 		{
-//			float maxAngle = 90f;
-//			float angleZ = -(mSteerTimeCur * maxAngle) / maxSteerTime;
-			float angleZ =  HidXKUnity_DLL.GetBikeRotationAZ( mSteerTimeCur );
+			float maxAngle = 90f;
+			float angleZ = -(mSteerTimeCur * maxAngle) / maxSteerTime;
+			if (angleZ > maxAngle) {
+				angleZ = maxAngle;
+			}
+			if (angleZ < -maxAngle) {
+				angleZ = -maxAngle;
+			}
+			//float angleZ =  HidXKUnity_DLL.GetBikeRotationAZ( mSteerTimeCur );
 			if(Mathf.Abs( angleZ ) > 45.0f)
 			{
 				if(angleZ > 0)

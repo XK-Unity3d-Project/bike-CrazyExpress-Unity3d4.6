@@ -104,7 +104,7 @@ public class bike : MonoBehaviour {
 	private const int STATE_RUN3 = 3; //run action
 	private const int STATE_RUN4 = 4; //run3 action
 	private float mSteerTimeCur = 0f;
-	private const float maxSteerTime = 5f;
+	private const float maxSteerTime = 1f;
 	private bool bIsDoFly = false;
 	private static int mRankingPlayer = 0;
 	private bool bIsMoveUp = false;
@@ -765,9 +765,15 @@ public class bike : MonoBehaviour {
 			
 			if(!bIsIntoFeiBan)
 			{
-				//float maxAngle = 90f;
-				//float angleZ = -(mSteerTimeCur * maxAngle) / maxSteerTime;
-				float angleZ =  HidXKUnity_DLL.GetBikeRotationAZ( mSteerTimeCur );
+				float maxAngle = 20f;
+				float angleZ = -(mSteerTimeCur * maxAngle) / maxSteerTime;
+				if (angleZ > maxAngle) {
+					angleZ = maxAngle;
+				}
+				if (angleZ < -maxAngle) {
+					angleZ = -maxAngle;
+				}
+				//float angleZ =  HidXKUnity_DLL.GetBikeRotationAZ( mSteerTimeCur );
 				Vector3 rotationA = mPlayer.transform.localEulerAngles;	
 				rotationA.z = angleZ;
 				if(Mathf.Abs(mSteerTimeCur) >= 0.05f && Time.frameCount % 3 == 0)
