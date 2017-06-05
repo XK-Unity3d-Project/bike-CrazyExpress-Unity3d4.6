@@ -297,11 +297,11 @@ public class bike : MonoBehaviour {
 		}
 
 		mSpeed = 0f;
-		if(!bIsAiNPC)
-		{
-			IsStartQiBuZuLi = true;
-			StartCoroutine( pcvr.GetInstance().SetBikeZuLiInfo( QiBuZuLi ) );
-		}
+//		if(!bIsAiNPC)
+//		{
+//			IsStartQiBuZuLi = true;
+//			StartCoroutine( pcvr.GetInstance().SetBikeZuLiInfo( QiBuZuLi ) );
+//		}
 		
 		mPlayer = this.gameObject;
 		setPlayerChildRigibody( mPlayer.transform, false );
@@ -730,11 +730,11 @@ public class bike : MonoBehaviour {
 						Invoke("resetBikeUseGravity", 0.5f);
 						mRunState = ROOT;
 						PlayAnimation(PlayerAniEnum.root);
-						if(!bIsAiNPC && !IsStartQiBuZuLi)
-						{
-							IsStartQiBuZuLi = true;
-							StartCoroutine( pcvr.GetInstance().SetBikeZuLiInfo( QiBuZuLi ) );
-						}
+//						if(!bIsAiNPC && !IsStartQiBuZuLi)
+//						{
+//							IsStartQiBuZuLi = true;
+//							StartCoroutine( pcvr.GetInstance().SetBikeZuLiInfo( QiBuZuLi ) );
+//						}
 					}
 					currentBrakeWaterPower = 0f;
 				}
@@ -800,11 +800,11 @@ public class bike : MonoBehaviour {
 					mRunState = ROOT;
 					PlayAnimation(PlayerAniEnum.root);
 					currentBrakeWaterPower = 0f;
-					if(!IsStartQiBuZuLi)
-					{
-						IsStartQiBuZuLi = true;
-						StartCoroutine( pcvr.GetInstance().SetBikeZuLiInfo( QiBuZuLi ) );
-					}
+//					if(!IsStartQiBuZuLi)
+//					{
+//						IsStartQiBuZuLi = true;
+//						StartCoroutine( pcvr.GetInstance().SetBikeZuLiInfo( QiBuZuLi ) );
+//					}
 				}
 			}
 
@@ -2482,21 +2482,21 @@ public class bike : MonoBehaviour {
 			FengXiaoObj.SetActive(false);
 		}
 
-		if(IsStartQiBuZuLi)
-		{
-			int zuLiVal = HidXKUnity_DLL.GetQiBuZuLi(mSpeed);
-			if(zuLiVal <= 3)
-			{
-				zuLiVal = 3;
-				IsStartQiBuZuLi = false;
-			}
-			
-			//ScreenLog.Log("zuLiVal " + zuLiVal);
-			if(pcvr.mBikeZuLiState != zuLiVal)
-			{
-				StartCoroutine( pcvr.GetInstance().SetBikeZuLiInfo( zuLiVal ) );
-			}
-		}
+//		if(IsStartQiBuZuLi)
+//		{
+//			int zuLiVal = HidXKUnity_DLL.GetQiBuZuLi(mSpeed);
+//			if(zuLiVal <= 3)
+//			{
+//				zuLiVal = 3;
+//				IsStartQiBuZuLi = false;
+//			}
+//			
+//			//ScreenLog.Log("zuLiVal " + zuLiVal);
+//			if(pcvr.mBikeZuLiState != zuLiVal)
+//			{
+//				StartCoroutine( pcvr.GetInstance().SetBikeZuLiInfo( zuLiVal ) );
+//			}
+//		}
 
 		if(isOutFeiBan && mSpeed < 20f)
 		{
@@ -2950,11 +2950,11 @@ public class bike : MonoBehaviour {
 			//ScreenLog.Log("HitJianSuDai ... move bike head up");
 			pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.UP, 60.0f, 10.0f);
 		}
-		else {
-			bIsMoveUp = false;
-			//ScreenLog.Log("HitJianSuDai ... move bike head down");
-			pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.DOWN, 60.0f, 10.0f);
-		}
+//		else {
+//			bIsMoveUp = false;
+//			//ScreenLog.Log("HitJianSuDai ... move bike head down");
+//			pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.DOWN, 60.0f, 10.0f);
+//		}
 	}
 
 	int luYanPosY = -1; //down state
@@ -3681,11 +3681,11 @@ public class bike : MonoBehaviour {
 
 		if(!bIsAiNPC)
 		{
-			IsStartQiBuZuLi = true;
-			if(pcvr.bIsHardWare)
-			{
-				bikeScript.StartCoroutine( pcvr.GetInstance().SetBikeZuLiInfo( QiBuZuLi ) );
-			}
+//			IsStartQiBuZuLi = true;
+//			if(pcvr.bIsHardWare)
+//			{
+//				bikeScript.StartCoroutine( pcvr.GetInstance().SetBikeZuLiInfo( QiBuZuLi ) );
+//			}
 
 			mMouseDownCount = 0;
 			clone.layer = LayerMask.NameToLayer("Player");

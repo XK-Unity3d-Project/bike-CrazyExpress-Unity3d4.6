@@ -3042,11 +3042,11 @@ public class bikeNetUnity : MonoBehaviour {
 			//ScreenLog.Log("HitJianSuDai ... move bike head up");
 			pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.UP, 60.0f, 10.0f);
 		}
-		else {
-			bIsMoveUp = false;
-			//ScreenLog.Log("HitJianSuDai ... move bike head down");
-			pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.DOWN, 60.0f, 10.0f);
-		}
+//		else {
+//			bIsMoveUp = false;
+//			//ScreenLog.Log("HitJianSuDai ... move bike head down");
+//			pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.DOWN, 60.0f, 10.0f);
+//		}
 	}
 
 	int GetAimMarkId(Transform aimMark)

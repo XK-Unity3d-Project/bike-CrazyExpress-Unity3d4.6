@@ -17,7 +17,7 @@ public class pcvr : MonoBehaviour {
 	public static int mBikeBrakeState = 0;
 	public static int mBikeZuLiState = 1;
 	public static int mBikeZuLiInfo = 0x00;
-	bool IsMovePlaneBikeHead = false;
+//	bool IsMovePlaneBikeHead = false;
 	public static bool IsHitJianSuDai = false;
 	public static bool IsJiaoYanHid;
 	public static bool IsSlowLoopCom;
@@ -34,7 +34,7 @@ public class pcvr : MonoBehaviour {
 	static public bool bPlayerOnRocket = false;
 	static public bool bPlayerOnFireBt = false;
 	static private pcvr Instance = null;
-	bool bIsRunBikeHead = false;
+//	bool bIsRunBikeHead = false;
 
 	static public pcvr GetInstance()
 	{
@@ -84,22 +84,42 @@ public class pcvr : MonoBehaviour {
 	public static bool IsOpenFireLight = false;
 	public static bool IsOpenStartLight = false;
 	int subCoinNum = 0;
+	bool IsSetBikeZuLi;
+	float TimeLastZuLi;
 	public IEnumerator SetBikeZuLiInfo(int zuLiState)
 	{
+		if (IsSetBikeZuLi) {
+			if (Time.time - TimeLastZuLi > 1) {
+				IsSetBikeZuLi = false;
+				TimeLastZuLi = Time.time;
+				mBikeZuLiState = 0;
+				CheckBikeZuLiInfo( mBikeZuLiState );
+//				Debug.LogWarning("reset IsSetBikeZuLi!");
+			}
+			yield break;
+		}
+		IsSetBikeZuLi = true;
+
 		if(zuLiState > 10)
 		{
 			zuLiState = 10;
 		}
 
-		if(zuLiState < 1)
+		if(zuLiState < 0)
 		{
-			zuLiState = 1;
+			zuLiState = 0;
 		}
 
 		int dZuLi = Mathf.Abs(zuLiState - mBikeZuLiState);
 		while(dZuLi > 1)
 		{
-			//ScreenLog.Log("dZuLi " + dZuLi + ", zuLiState " + zuLiState + ", mBikeZuLiState " + mBikeZuLiState);
+			if (!IsSetBikeZuLi) {
+				yield break;
+			}
+//			ScreenLog.Log("dZuLi " + dZuLi +
+//			              ", zuLiState " + zuLiState +
+//			              ", mBikeZuLiState " + mBikeZuLiState +
+//			              ", time "+Time.time);
 			if(zuLiState > mBikeZuLiState)
 			{
 				mBikeZuLiState++;
@@ -110,13 +130,21 @@ public class pcvr : MonoBehaviour {
 			}
 
 			CheckBikeZuLiInfo( mBikeZuLiState );
-
 			dZuLi = Mathf.Abs(zuLiState - mBikeZuLiState);
+//			ScreenLog.Log("dZuLi " + dZuLi +
+//			              ", zuLiState " + zuLiState +
+//			              ", mBikeZuLiState " + mBikeZuLiState +
+//			              ", time "+Time.time + "  **");
 			yield return new WaitForSeconds(0.5f);
 		}
 
 		mBikeZuLiState = zuLiState;
+//		ScreenLog.Log("dZuLi " + dZuLi +
+//		              ", zuLiState " + zuLiState +
+//		              ", mBikeZuLiState " + mBikeZuLiState +
+//		              ", time "+Time.time + "  +++++");
 		CheckBikeZuLiInfo( zuLiState );
+		IsSetBikeZuLi = false;
 	}
 
 
@@ -151,8 +179,13 @@ public class pcvr : MonoBehaviour {
 			}
 		}
 
-		float baseVal = (float)(max - min) / 10f; //注意max和min的差值一定要大于被除数,否则baseVal始终为0.
 		int zuLiDengJi = GlobalData.GetInstance().BikeZuLiDengJi;
+		if (zuLiDengJi <= 0 || zuLiState <= 0) {
+			mBikeZuLiInfo = 0x00;
+			return;
+		}
+
+		float baseVal = (float)(max - min) / 10f; //注意max和min的差值一定要大于被除数,否则baseVal始终为0.
 		int zuLiVal = 0;
 		switch (ZuLiJiGou) {
 		case 0:
@@ -197,6 +230,7 @@ public class pcvr : MonoBehaviour {
 	{
 		StopCoroutine(SetBikeZuLiInfo( 1 ));
 		mBikeZuLiInfo = 0x00;
+		IsSetBikeZuLi = false;
 		//StartCoroutine( SetBikeZuLiInfo( 1 ) );
 	}
 
@@ -264,7 +298,7 @@ public class pcvr : MonoBehaviour {
 		CloseQiNangYou();
 	}
 
-	bool IsPlayerHit = false;
+	public bool IsPlayerHit = false;
 	int MaxQiNangCount = 4;
 	public void HandlePlayerHitState(int key = 0)
 	{
@@ -1107,7 +1141,8 @@ QiNangArray[3]				QiNangArray[1]
 	//handle bike head move up or down
 	public void HandleBikeHeadQiFu(BikeHeadMoveState moveState, float bikeSpeed, float bikeGrade)
 	{
-		if(IsPlayerHit || bIsRunBikeHead || IsMovePlaneBikeHead)
+		//if(IsPlayerHit || bIsRunBikeHead || IsMovePlaneBikeHead)
+		if(IsPlayerHit)
 		{
 			return;
 		}
@@ -1163,6 +1198,7 @@ QiNangArray[3]				QiNangArray[1]
 			}
 		}
 //		ScreenLog.Log("stateQF " + stateQF + ", mvSpeed " + mvSpeed
+//		              + ", IsStartQiBuZuLi " + bike.IsStartQiBuZuLi
 //		              + ", zuLiState " + zuLiState + ", moveState " + moveState);
 
 		if( ((bike.IsHitLuYan || bike.IsHitJianSuDai) && GlobalData.GetInstance().gameMode == GameMode.SoloMode)
@@ -1190,7 +1226,14 @@ QiNangArray[3]				QiNangArray[1]
 		if((!bike.IsStartQiBuZuLi && GlobalData.GetInstance().gameMode == GameMode.SoloMode)
 		   || GlobalData.GetInstance().gameMode == GameMode.OnlineMode)
 		{
-			StartCoroutine( SetBikeZuLiInfo( zuLiState ) );
+			switch (moveState) {
+			case BikeHeadMoveState.UP:
+				StartCoroutine( SetBikeZuLiInfo( zuLiState ) );
+				break;
+			default:
+				StartCoroutine( SetBikeZuLiInfo( 0 ) );
+				break;
+			}
 		}
 	}
 
