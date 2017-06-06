@@ -3,7 +3,7 @@ using System.Collections;
 
 public class XKGameVersionCtrl : MonoBehaviour {
 	UILabel VersionLB;
-	public static string GameVersion = "Version: 1.3.1_Com_20170330";
+	public static string GameVersion = "Version: 1.3.2_Com_20170606";
 	// Use this for initialization
 	void Start()
 	{
