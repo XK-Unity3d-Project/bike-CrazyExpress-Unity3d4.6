@@ -130,6 +130,20 @@ public class GlobalData  {
 				handleJsonObj.WriteToFileXml(fileName, "BikeZuLiDengJi", value.ToString());
 			}
 			Instance.BikeZuLiDengJi = value;
+
+			string fileNameTmp = "../config/Config.xml";
+			readInfo = handleJsonObj.ReadFromFileXml(fileNameTmp, "ZuLiDengJiMax");
+			if (readInfo == null || readInfo == "") {
+				readInfo = "6";
+				handleJsonObj.WriteToFileXml(fileNameTmp, "ZuLiDengJiMax", readInfo);
+			}
+			
+			value = Convert.ToInt32(readInfo);
+			if (value < 2 || value > 10) {
+				value = 6;
+				handleJsonObj.WriteToFileXml(fileNameTmp, "ZuLiDengJiMax", value.ToString());
+			}
+			Instance.ZuLiDengJiMax = value;
 		}
 		return Instance;
 	}
@@ -191,6 +205,7 @@ public class GlobalData  {
 
 	public int BikeHeadSpeedState = 2;
 	public int BikeZuLiDengJi = 0;
+	public int ZuLiDengJiMax = 6;
 
 	public static void SetGameTextMode(GameTextType modeVal)
 	{

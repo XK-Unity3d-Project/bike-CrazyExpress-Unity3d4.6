@@ -204,26 +204,33 @@ public class SetPanel : MonoBehaviour {
 	}
 
 	public UILabel ZuLiInfo;
+	public UILabel ZuLiJiZhi;
 	int zuLiDengJi = 3;
 	void InitBikeZuLiDengJi()
 	{
 		zuLiDengJi = GlobalData.GetInstance().BikeZuLiDengJi - 1;
+		int max = GlobalData.GetInstance().ZuLiDengJiMax;
+		if(zuLiDengJi > max) {
+			zuLiDengJi = max - 1;
+		}
 		setBikeZuLiDengJi();
 	}
 
 	void ResetBikeZuLiDengJi()
 	{
-		zuLiDengJi = 4;
+		zuLiDengJi = 1;
 		setBikeZuLiDengJi();
 	}
 
 	void setBikeZuLiDengJi()
 	{
 		zuLiDengJi++;
-		if(zuLiDengJi > 10) {
+		int max = GlobalData.GetInstance().ZuLiDengJiMax;
+		if(zuLiDengJi > max) {
 			zuLiDengJi = 0;
 		}
 
+		ZuLiJiZhi.text = "(0-"+max.ToString()+")";
 		ZuLiInfo.text = zuLiDengJi.ToString();
 		GlobalData.GetInstance().BikeZuLiDengJi = zuLiDengJi;
 		handleJsonObj.WriteToFileXml(fileName, "BikeZuLiDengJi", zuLiDengJi.ToString());
