@@ -40,6 +40,10 @@ public class pcvr : MonoBehaviour {
 	{
 		if(Instance == null)
 		{
+			if (FreeModeCtrl.IsServer) {
+				return null;
+			}
+
 			GameObject obj = new GameObject("_PCVR");
 			DontDestroyOnLoad(obj);
 			Instance = obj.AddComponent<pcvr>();
@@ -173,6 +177,7 @@ public class pcvr : MonoBehaviour {
 			if (InputEventCtrl.PlayerTB[0] <= 0.1f
 			    || GlobalScript.GetInstance().player.IsPass
 			    || Mathf.Abs((float)BianMaQiCurVal[0] - 30000) < 100f
+			    || GlobalScript.GetInstance().player.Speed < 8
 			    || GlobalScript.GetInstance().player.Life <= 0) {
 				mBikeZuLiInfo = 0x00;
 				return;

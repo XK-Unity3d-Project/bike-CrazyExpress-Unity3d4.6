@@ -1166,7 +1166,7 @@ public class bikeNetUnity : MonoBehaviour {
 
 		if(!bIsIntoFeiBan && !bIsDoFly)
 		{
-			float maxAngle = 90f;
+			float maxAngle = 20f;
 			float angleZ = -(mSteerTimeCur * maxAngle) / maxSteerTime;
 			if (angleZ > maxAngle) {
 				angleZ = maxAngle;
