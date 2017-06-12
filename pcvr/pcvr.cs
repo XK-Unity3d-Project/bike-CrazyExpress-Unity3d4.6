@@ -88,7 +88,7 @@ public class pcvr : MonoBehaviour {
 	public static bool IsOpenFireLight = false;
 	public static bool IsOpenStartLight = false;
 	int subCoinNum = 0;
-	bool IsSetBikeZuLi;
+	static bool IsSetBikeZuLi;
 	float TimeLastZuLi;
 	public IEnumerator SetBikeZuLiInfo(int zuLiState)
 	{
@@ -217,10 +217,16 @@ public class pcvr : MonoBehaviour {
 			zuLiVal = 0xff;
 		}
 		mBikeZuLiInfo = zuLiVal;
+
+		if (mBikeZuLiInfo != 0) {
+			TimeBikeZuLiVal = Time.time;
+		}
 	}
+	float TimeBikeZuLiVal;
 
 	public static void ResetBikeZuLiInfo()
 	{
+		IsSetBikeZuLi = false;
 		mBikeZuLiInfo = 0x00;
 	}
 
@@ -373,7 +379,9 @@ public class pcvr : MonoBehaviour {
 		GetPcvrBianMaQiVal();
 
 		if (!bIsHardWare) {
-			return;
+			if (!IsTestXiaoScreen) {
+				return;
+			}
 		}
 
 		float dTime = Time.realtimeSinceStartup - lastUpTime;
@@ -722,7 +730,9 @@ QiNangArray[3]				QiNangArray[1]
 	void SendMessage()
 	{
 		if (!MyCOMDevice.IsFindDeviceDt) {
-			return;
+			if (!IsTestXiaoScreen) {
+				return;
+			}
 		}
 		
 		byte[] buffer = new byte[HID_WRITE_BUF_LEN];
@@ -822,6 +832,11 @@ QiNangArray[3]				QiNangArray[1]
 		else {
 			if (Application.loadedLevel == (int)GameLeve.Movie) {
 				mBikeZuLiInfo = 0x00;
+			}
+
+			if (mBikeZuLiInfo != 0 && Time.time - TimeBikeZuLiVal > 3f) {
+				TimeBikeZuLiVal = Time.time;
+				ResetBikeZuLiInfo();
 			}
 			buffer[9] = (byte)mBikeZuLiInfo;
 		}

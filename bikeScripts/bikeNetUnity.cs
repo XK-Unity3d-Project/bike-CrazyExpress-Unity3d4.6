@@ -3492,7 +3492,7 @@ public class bikeNetUnity : MonoBehaviour {
 		case "tennisBallAmmo":
 			if(!checkHaveOwnerPlayer() || Network.player != ownerPlayer)
 			{
-				ScreenLog.LogWarning("ammo -> should hit real player client!");
+				//ScreenLog.LogWarning("ammo -> should hit real player client!");
 				yield break;
 			}
 			
