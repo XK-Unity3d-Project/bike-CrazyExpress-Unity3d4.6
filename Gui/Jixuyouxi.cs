@@ -68,7 +68,9 @@ public class Jixuyouxi : MonoBehaviour {
 		{
 			AudioManager.Instance.PlaySFX( StartBtAudio );
 			GlobalData.GetInstance().Icon -= GlobalData.GetInstance().XUTOUBI;
-			pcvr.GetInstance().SubPlayerCoin(GlobalData.GetInstance().XUTOUBI);
+			if (pcvr.GetInstance() != null) {
+				pcvr.GetInstance().SubPlayerCoin(GlobalData.GetInstance().XUTOUBI);
+			}
 			GlobalScript.GetInstance().player.AddLife(GlobalData.GetInstance().GAMETIME);
 			start.SetActive(false);
 			qingtoubi.SetActive(false);

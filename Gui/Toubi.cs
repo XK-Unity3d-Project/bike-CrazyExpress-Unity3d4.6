@@ -85,7 +85,9 @@ public class Toubi : MonoBehaviour {
 		if(GlobalData.GetInstance().Icon >= GlobalData.GetInstance().XUTOUBI)
 		{
 			GlobalData.GetInstance().Icon -= GlobalData.GetInstance().XUTOUBI;
-			pcvr.GetInstance().SubPlayerCoin( GlobalData.GetInstance().XUTOUBI );
+			if (pcvr.GetInstance() != null) {
+				pcvr.GetInstance().SubPlayerCoin( GlobalData.GetInstance().XUTOUBI );
+			}
 			ConvertNumToImg("yi", GlobalData.GetInstance().Icon);
 		}
 	}

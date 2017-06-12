@@ -148,10 +148,12 @@ public class caipiao : MonoBehaviour {
 //		s = 0; //Remove CaiPiao
 //		s = 10; //test
 //		InitCaiPiaoBuZu(); //test
-
-		StartCoroutine( pcvr.GetInstance().SetBikeZuLiInfo(0) );
-		pcvr.GetInstance().setFengShanInfo(0, 0);
-		pcvr.GetInstance().setFengShanInfo(0, 1);
+		
+		if (pcvr.GetInstance() != null) {
+			StartCoroutine( pcvr.GetInstance().SetBikeZuLiInfo(0) );
+			pcvr.GetInstance().setFengShanInfo(0, 0);
+			pcvr.GetInstance().setFengShanInfo(0, 1);
+		}
 
 //		if(!GlobalData.GetInstance().IsOutputCaiPiao || GlobalData.GetInstance().IsFreeMode)
 //		{

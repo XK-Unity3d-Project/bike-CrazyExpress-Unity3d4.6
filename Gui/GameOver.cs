@@ -28,8 +28,10 @@ public class GameOver : MonoBehaviour {
 		GlobalScript.GetInstance().player.IsPass=true;
 		pcvr.ResetBikeZuLiInfo();
 		Rank.GetInstance().HiddenRankList();
-
-		pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, 0.0f, 0.0f);
+		
+		if (pcvr.GetInstance() != null) {
+			pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, 0.0f, 0.0f);
+		}
 		//ScreenLog.Log("GameOver ******************** test");
 	}
 }

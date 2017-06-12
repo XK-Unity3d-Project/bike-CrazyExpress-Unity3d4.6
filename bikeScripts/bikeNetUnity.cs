@@ -1349,7 +1349,9 @@ public class bikeNetUnity : MonoBehaviour {
 				isPlayCool = false;
 				isOutFeiBan = false;
 				bIsIntoFeiBan = false;
-				pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, mSpeed, 10.0f);
+				if (pcvr.GetInstance() != null) {
+					pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, mSpeed, 10.0f);
+				}
 				
 				mRunState = STATE_RUN2;
 				if (Network.isClient) {
@@ -1414,7 +1416,9 @@ public class bikeNetUnity : MonoBehaviour {
 			{
 				if(checkHaveOwnerPlayer() && Network.player == ownerPlayer && Network.isClient)
 				{
-					pcvr.GetInstance().HandlePlayerHitState();
+					if (pcvr.GetInstance() != null) {
+						pcvr.GetInstance().HandlePlayerHitState();
+					}
 					CameraShake.GetInstance().setCameraShakeImpulseValue();
 				}
 			}
@@ -1444,7 +1448,9 @@ public class bikeNetUnity : MonoBehaviour {
 			{
 				if(checkHaveOwnerPlayer() && Network.player == ownerPlayer && Network.isClient)
 				{
-					pcvr.GetInstance().HandlePlayerHitState();
+					if (pcvr.GetInstance() != null) {
+						pcvr.GetInstance().HandlePlayerHitState();
+					}
 					CameraShake.GetInstance().setCameraShakeImpulseValue();
 				}
 			}
@@ -1518,7 +1524,9 @@ public class bikeNetUnity : MonoBehaviour {
 			{
 				if(checkHaveOwnerPlayer() && Network.player == ownerPlayer && Network.isClient)
 				{
-					pcvr.GetInstance().HandlePlayerHitState();
+					if (pcvr.GetInstance() != null) {
+						pcvr.GetInstance().HandlePlayerHitState();
+					}
 					CameraShake.GetInstance().setCameraShakeImpulseValue();
 				}
 			}
@@ -1543,7 +1551,9 @@ public class bikeNetUnity : MonoBehaviour {
 			//if(checkHaveOwnerPlayer() && Network.player == ownerPlayer && Network.isClient)
 			if(Network.isClient)
 			{
-				pcvr.GetInstance().HandlePlayerHitState();
+				if (pcvr.GetInstance() != null) {
+					pcvr.GetInstance().HandlePlayerHitState();
+				}
 				return;
 			}
 		}
@@ -1640,7 +1650,9 @@ public class bikeNetUnity : MonoBehaviour {
 					if(!IsIntoXiaoFeiBan && !bIsIntoFeiBan)
 					{
 						StateMove = BikeHeadMoveState.UP;
-						pcvr.GetInstance().HandleBikeHeadQiFu(StateMove, mSpeed, grade);
+						if (pcvr.GetInstance() != null) {
+							pcvr.GetInstance().HandleBikeHeadQiFu(StateMove, mSpeed, grade);
+						}
 					}
 				}
 				
@@ -1649,7 +1661,9 @@ public class bikeNetUnity : MonoBehaviour {
 					if(!IsIntoXiaoFeiBan && !bIsIntoFeiBan)
 					{
 						StateMove = BikeHeadMoveState.DOWN;
-						pcvr.GetInstance().HandleBikeHeadQiFu(StateMove, mSpeed, grade);
+						if (pcvr.GetInstance() != null) {
+							pcvr.GetInstance().HandleBikeHeadQiFu(StateMove, mSpeed, grade);
+						}
 					}
 				}
 			}
@@ -2674,7 +2688,9 @@ public class bikeNetUnity : MonoBehaviour {
 		if(dVal >= 20.0f)
 		{
 			//ScreenLog.Log("checkBikeSpeed -> dVal " + dVal);
-			pcvr.GetInstance().HandlePlayerHitState();
+			if (pcvr.GetInstance() != null) {
+				pcvr.GetInstance().HandlePlayerHitState();
+			}
 		}
 		mSpeedOld = mSpeed;
 		
@@ -2692,8 +2708,10 @@ public class bikeNetUnity : MonoBehaviour {
 			}
 		}
 		
-		pcvr.GetInstance().setFengShanInfo(fengVal, 0);
-		pcvr.GetInstance().setFengShanInfo(fengVal, 1);
+		if (pcvr.GetInstance() != null) {
+			pcvr.GetInstance().setFengShanInfo(fengVal, 0);
+			pcvr.GetInstance().setFengShanInfo(fengVal, 1);
+		}
 
 		if(mSpeed >= 50)
 		{
@@ -3024,7 +3042,9 @@ public class bikeNetUnity : MonoBehaviour {
 		//Debug.Log("over HandlePlayerIntoJianSuDai...");
 		CancelInvoke("HandlePlayerIntoJianSuDai");
 		bIsMoveUp = false;
-		pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, 60.0f, 10.0f);
+		if (pcvr.GetInstance() != null) {
+			pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, 60.0f, 10.0f);
+		}
 		JianSuDaiNum = 0;
 		IsHitJianSuDai = false;
 		pcvr.IsHitJianSuDai = false;
@@ -3042,11 +3062,15 @@ public class bikeNetUnity : MonoBehaviour {
 		}
 		
 		JianSuDaiNum++;
-		pcvr.GetInstance().OpenFangXiangPanZhenDong();
+		if (pcvr.GetInstance() != null) {
+			pcvr.GetInstance().OpenFangXiangPanZhenDong();
+		}
 		if(!bIsMoveUp) {
 			bIsMoveUp = true;
 			//ScreenLog.Log("HitJianSuDai ... move bike head up");
-			pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.UP, 60.0f, 10.0f);
+			if (pcvr.GetInstance() != null) {
+				pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.UP, 60.0f, 10.0f);
+			}
 		}
 //		else {
 //			bIsMoveUp = false;
@@ -3151,11 +3175,15 @@ public class bikeNetUnity : MonoBehaviour {
 
 				if(luYanPosY == -1)
 				{
-					pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, 60.0f, 10.0f);
+					if (pcvr.GetInstance() != null) {
+						pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, 60.0f, 10.0f);
+					}
 				}
 				else
 				{
-					pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.UP, 60.0f, 10.0f);
+					if (pcvr.GetInstance() != null) {
+						pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.UP, 60.0f, 10.0f);
+					}
 				}
 			}
 			break;
@@ -3303,7 +3331,9 @@ public class bikeNetUnity : MonoBehaviour {
 			{
 				ParticleObj.SetActive(false);
 				if (!bIsAiNPC && checkHaveOwnerPlayer() && Network.player == ownerPlayer && Network.isClient) {
-					pcvr.GetInstance().PlayerMoveOutTuLu();
+					if (pcvr.GetInstance() != null) {
+						pcvr.GetInstance().PlayerMoveOutTuLu();
+					}
 				}
 				WaterParticleObj.SetActive(true);
 				//ScreenLog.Log("IntoWater");
@@ -3358,7 +3388,9 @@ public class bikeNetUnity : MonoBehaviour {
 
 			if(!bIsAiNPC && colObj.collider.enabled && col.childCount > 0)
 			{
-				pcvr.GetInstance().HandlePlayerHitState(1);
+				if (pcvr.GetInstance() != null) {
+					pcvr.GetInstance().HandlePlayerHitState(1);
+				}
 				luYanPosY = -1;
 				colObj.animation.Stop();
 				colObj.collider.enabled = false;
@@ -3432,7 +3464,9 @@ public class bikeNetUnity : MonoBehaviour {
 
 			if(!bIsAiNPC && colObj.collider.enabled && col.childCount > 0)
 			{
-				pcvr.GetInstance().HandlePlayerHitState(1);
+				if (pcvr.GetInstance() != null) {
+					pcvr.GetInstance().HandlePlayerHitState(1);
+				}
 				luYanPosY = -1;
 				colObj.animation.Stop();
 				colObj.collider.enabled = false;
@@ -3478,7 +3512,9 @@ public class bikeNetUnity : MonoBehaviour {
 
 			if(!bIsAiNPC && colObj.collider.enabled && col.childCount > 0)
 			{
-				pcvr.GetInstance().HandlePlayerHitState(1);
+				if (pcvr.GetInstance() != null) {
+					pcvr.GetInstance().HandlePlayerHitState(1);
+				}
 				luYanPosY = -1;
 				colObj.animation.Stop();
 				colObj.collider.enabled = false;
@@ -3552,7 +3588,9 @@ public class bikeNetUnity : MonoBehaviour {
 				}
 				CancelInvoke("ResetIsIntoFeiBan");
 				Invoke("ResetIsIntoFeiBan", 6f);
-				pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.UP, mSpeed, 10.0f);
+				if (pcvr.GetInstance() != null) {
+					pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.UP, mSpeed, 10.0f);
+				}
 			}
 			break;
 			
@@ -3575,7 +3613,9 @@ public class bikeNetUnity : MonoBehaviour {
 				{
 					ResetPlayerIntoJianSuDai();
 				}
-				pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.UP, mSpeed, 10.0f);
+				if (pcvr.GetInstance() != null) {
+					pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.UP, mSpeed, 10.0f);
+				}
 				Invoke("resetIsIntoXiaoFeiBan", 1f);
 			}
 			break;
@@ -3630,7 +3670,9 @@ public class bikeNetUnity : MonoBehaviour {
 	void ResetIsIntoFeiBan()
 	{
 		bIsIntoFeiBan = false;
-		pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, mSpeed, 10.0f);
+		if (pcvr.GetInstance() != null) {
+			pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, mSpeed, 10.0f);
+		}
 	}
 
 	public void playFireAction()
@@ -3660,7 +3702,9 @@ public class bikeNetUnity : MonoBehaviour {
 		{
 			ResetPlayerIntoJianSuDai();
 		}
-		pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, mSpeed, 0.0f);
+		if (pcvr.GetInstance() != null) {
+			pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, mSpeed, 0.0f);
+		}
 	}
 	
 	IEnumerator callPlayerRunEnd(int rankNum)
@@ -3681,7 +3725,9 @@ public class bikeNetUnity : MonoBehaviour {
 		{
 			ResetPlayerIntoJianSuDai();
 		}
-		pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, 0.0f, 0.0f);
+		if (pcvr.GetInstance() != null) {
+			pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, 0.0f, 0.0f);
+		}
 		yield break;
 	}
 	
@@ -3904,7 +3950,9 @@ public class bikeNetUnity : MonoBehaviour {
 			{
 				ResetPlayerIntoJianSuDai();
 			}
-			pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, 0.0f, 0.0f);
+			if (pcvr.GetInstance() != null) {
+				pcvr.GetInstance().HandleBikeHeadQiFu(BikeHeadMoveState.PLANE, 0.0f, 0.0f);
+			}
 		}
 		
 		makeBikeFallPlane();
@@ -4007,7 +4055,9 @@ public class bikeNetUnity : MonoBehaviour {
 			if (ParticleObj.activeSelf) {
 				ParticleObj.SetActive(false);
 				if (!bIsAiNPC && checkHaveOwnerPlayer() && Network.player == ownerPlayer && Network.isClient) {
-					pcvr.GetInstance().PlayerMoveOutTuLu();
+					if (pcvr.GetInstance() != null) {
+						pcvr.GetInstance().PlayerMoveOutTuLu();
+					}
 				}
 			}
 			return;
@@ -4023,14 +4073,18 @@ public class bikeNetUnity : MonoBehaviour {
 		{
 			ParticleObj.SetActive(true);
 			if (!bIsAiNPC && checkHaveOwnerPlayer() && Network.player == ownerPlayer && Network.isClient) {
-				pcvr.GetInstance().PlayerMoveIntoTuLu();
+				if (pcvr.GetInstance() != null) {
+					pcvr.GetInstance().PlayerMoveIntoTuLu();
+				}
 			}
 		}
 		else
 		{
 			ParticleObj.SetActive(false);
 			if (!bIsAiNPC && checkHaveOwnerPlayer() && Network.player == ownerPlayer && Network.isClient) {
-				pcvr.GetInstance().PlayerMoveOutTuLu();
+				if (pcvr.GetInstance() != null) {
+					pcvr.GetInstance().PlayerMoveOutTuLu();
+				}
 			}
 		}
 	}
