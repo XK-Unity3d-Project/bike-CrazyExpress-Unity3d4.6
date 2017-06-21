@@ -1290,6 +1290,7 @@ QiNangArray[3]				QiNangArray[1]
 
 	void KeyProcess(uint []buffer)
 	{
+		UpdateBikeSteerVal(buffer);
 		YouMenCurVal[0] = ( (buffer[2] & 0x0f) << 8 ) + buffer[3]; //youMen.
 		ShaCheLCurVal[0] = ( (buffer[4] & 0x0f) << 8 ) + buffer[5]; //shaCheL.
 		SteerValCurAy[0] = ( (buffer[6] & 0x0f) << 8 ) + buffer[7]; //fangXiang.
@@ -1424,8 +1425,25 @@ QiNangArray[3]				QiNangArray[1]
 	public static uint[] SteerValCenAy = new uint[4]{1765, 1765, 1765, 1765};
 	public static uint[] SteerValMinAy = new uint[4];
 	public static uint[] SteerValCurAy = new uint[4];
+	static bool IsJiaoZhunSteer;
+	byte RecordSteerCount;
+	void UpdateBikeSteerVal(uint []buffer)
+	{
+		if (IsJiaoZhunSteer || RecordSteerCount > 10) {
+			return;
+		}
+		RecordSteerCount++;
+		SteerValMinAy[0] = ( (buffer[25] & 0x0f) << 8 ) + buffer[26];
+		SteerValCenAy[0] = ( (buffer[27] & 0x0f) << 8 ) + buffer[28];
+		SteerValMaxAy[0] = ( (buffer[29] & 0x0f) << 8 ) + buffer[30];
+	}
+
 	void InitSteerInfo()
 	{
+		if (!IsJiaoZhunSteer) {
+			return;
+		}
+
 		int indexVal = 0;
 		string strVal = "";
 		int maxVal = 1;
@@ -1462,6 +1480,7 @@ QiNangArray[3]				QiNangArray[1]
 	
 	public static void SaveSteerVal(PcvrValState key, PlayerEnum indexPlayer)
 	{
+		IsJiaoZhunSteer = true;
 		int indexVal = (int)indexPlayer - 1;
 		int playerNum = (int)indexPlayer;
 		Debug.Log("key "+key);

@@ -12,7 +12,7 @@ public class MyCOMDevice : MonoBehaviour
 	{
 		public string ThreadName;
 		static SerialPort _SerialPort;
-		public static int BufLenRead = 29;
+		public static int BufLenRead = 35;
 		public static int BufLenReadEnd = 4;
 		public static  int BufLenWrite = 23;
 		public static byte[] ReadByteMsg = new byte[BufLenRead];
