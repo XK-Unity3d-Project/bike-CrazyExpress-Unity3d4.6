@@ -603,6 +603,7 @@ public class SetPanel : MonoBehaviour {
 			break;
 		case GameSetEnum.Exit:
 			StarTran.localPosition = new Vector3(-565f, -210f, 0f);
+			moveCount++; //跳过方向校准,由硬件告诉游戏方向极值信息.
 			break;
 		case GameSetEnum.FangXiangJZ:
 			StarTran.localPosition = new Vector3(35f, 235f, 0f);
