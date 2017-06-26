@@ -528,7 +528,7 @@ public class bike : MonoBehaviour {
 					//subEnergy = 7.5f;
 					break;
 				}
-				subEnergy = 100f / 15f; //15秒.
+				subEnergy = 100f / 20f; //15秒.
 
 				subEnergy = subEnergy * Time.deltaTime;
 				energy -= subEnergy;
