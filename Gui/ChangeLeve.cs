@@ -245,6 +245,7 @@ public class ChangeLeve : MonoBehaviour {
 		InputEventCtrl.GetInstance().ClickStartBtEvent -= clickStartBtEvent;
 	}
 
+	const float TimeSLMax = 1f;
 	float selectTime = 10.0f;
 	static bool bIsClickStartBt = false;
 	// Update is called once per frame
@@ -268,7 +269,7 @@ public class ChangeLeve : MonoBehaviour {
 
 				if(hor > 0f)
 				{
-					if(GlobalData.GetInstance().gameLeve != GameLeve.Leve2 || selectTime > 2.0f)
+					if(GlobalData.GetInstance().gameLeve != GameLeve.Leve2 || selectTime > TimeSLMax)
 					{
 						selectTime = 0.0f;
 						AudioManager.Instance.PlaySFX(ChangeLeveAudio);
@@ -278,7 +279,7 @@ public class ChangeLeve : MonoBehaviour {
 				}
 				else if(hor < 0f)
 				{
-					if(GlobalData.GetInstance().gameLeve != GameLeve.Leve1 || selectTime > 2.0f)
+					if(GlobalData.GetInstance().gameLeve != GameLeve.Leve1 || selectTime > TimeSLMax)
 					{
 						selectTime = 0.0f;
 						AudioManager.Instance.PlaySFX(ChangeLeveAudio);

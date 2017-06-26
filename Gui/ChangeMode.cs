@@ -170,6 +170,7 @@ public class ChangeMode : MonoBehaviour {
 		}
 	}
 
+	const float TimeSLMax = 1f;
 	float selectTime = 10.0f;
 	// Update is called once per frame
 	void Update ()
@@ -177,16 +178,16 @@ public class ChangeMode : MonoBehaviour {
 		//ChangeWaitSprit();
 		
 		selectTime += Time.deltaTime;
-		if (selectTime < 2.0f) {
+		if (selectTime < TimeSLMax) {
 			return;
 		}
-		selectTime = 2f;
+		selectTime = TimeSLMax;
 
 		float hor = InputEventCtrl.PlayerFX[0];
 //		if(((Input.GetButtonDown("Horizontal") && (!pcvr.bIsHardWare || pcvr.IsTestGetInput))
 //		    || (pcvr.bIsHardWare && Mathf.Abs(pcvr.mBikeSteer) > 0.3f))
 //		    && !StartSenceChangeUI.IsSelectGameMode)
-		if(Mathf.Abs(hor) > 0.3f && !StartSenceChangeUI.IsSelectGameMode)
+		if(Mathf.Abs(hor) > 0.5f && !StartSenceChangeUI.IsSelectGameMode)
 		{
 			if(SelectObj.activeSelf)
 			{
@@ -203,7 +204,7 @@ public class ChangeMode : MonoBehaviour {
 			//AudioManager.Instance.PlaySFX(ChangeModeMusic);
 			if(hor > 0f)
 			{
-				if(GlobalData.GetInstance().gameMode != GameMode.OnlineMode || selectTime > 2.0f)
+				if(GlobalData.GetInstance().gameMode != GameMode.OnlineMode || selectTime > TimeSLMax)
 				{
 					selectTime = 0.0f;
 					AudioManager.Instance.PlaySFX(ChangeModeMusic);
@@ -213,7 +214,7 @@ public class ChangeMode : MonoBehaviour {
 			}
 			else if(hor < 0f)
 			{
-				if(GlobalData.GetInstance().gameMode != GameMode.SoloMode || selectTime > 2.0f)
+				if(GlobalData.GetInstance().gameMode != GameMode.SoloMode || selectTime > TimeSLMax)
 				{
 					selectTime = 0.0f;
 					AudioManager.Instance.PlaySFX(ChangeModeMusic);
