@@ -964,7 +964,7 @@ QiNangArray[3]				QiNangArray[1]
 		}
 		
 		if (MyCOMDevice.ComThreadClass.ReadByteMsg.Length < (MyCOMDevice.ComThreadClass.BufLenRead - MyCOMDevice.ComThreadClass.BufLenReadEnd)) {
-			//Debug.Log("ReadBufLen was wrong! len is "+MyCOMDevice.ComThreadClass.ReadByteMsg.Length);
+			//ScreenLog.Log("ReadBufLen was wrong! len is "+MyCOMDevice.ComThreadClass.ReadByteMsg.Length);
 			return;
 		}
 		
@@ -991,8 +991,13 @@ QiNangArray[3]				QiNangArray[1]
 		byte tmpVal = 0x00;
 		string testA = "";
 		int max = MyCOMDevice.ComThreadClass.BufLenRead - 4;
-		if (MyCOMDevice.ComThreadClass.BufLenRead == 29) {
-			max = MyCOMDevice.ComThreadClass.BufLenRead - 6;
+		switch (MyCOMDevice.ComThreadClass.BufLenRead) {
+		case 29:
+				max = MyCOMDevice.ComThreadClass.BufLenRead - 6;
+				break;
+		case 35:
+				max = MyCOMDevice.ComThreadClass.BufLenRead - 12;
+				break;
 		}
 
 		for (int i = 2; i < max; i++) {
@@ -1002,19 +1007,19 @@ QiNangArray[3]				QiNangArray[1]
 			testA += MyCOMDevice.ComThreadClass.ReadByteMsg[i].ToString("X2") + " ";
 			tmpVal ^= MyCOMDevice.ComThreadClass.ReadByteMsg[i];
 		}
-		tmpVal ^= EndRead_1;
-		tmpVal ^= EndRead_2;
-		testA += EndRead_1.ToString("X2") + " ";
-		testA += EndRead_2.ToString("X2") + " ";
+//		tmpVal ^= EndRead_1;
+//		tmpVal ^= EndRead_2;
+//		testA += EndRead_1.ToString("X2") + " ";
+//		testA += EndRead_2.ToString("X2") + " ";
 		
 		if (tmpVal != MyCOMDevice.ComThreadClass.ReadByteMsg[21]) {
 			if (MyCOMDevice.ComThreadClass.IsStopComTX) {
 				return;
 			}
 			MyCOMDevice.ComThreadClass.IsStopComTX = true;
-//			ScreenLog.Log("testA: "+testA);
-//			ScreenLog.LogError("tmpVal: "+tmpVal.ToString("X2")+", byte[21] "+MyCOMDevice.ComThreadClass.ReadByteMsg[21].ToString("X2"));
-//			ScreenLog.Log("byte21 was wrong!");
+			//ScreenLog.Log("testA: "+testA);
+			//ScreenLog.LogError("tmpVal: "+tmpVal.ToString("X2")+", byte[21] "+MyCOMDevice.ComThreadClass.ReadByteMsg[21].ToString("X2"));
+			//ScreenLog.Log("byte21 was wrong!");
 			return;
 		}
 		
