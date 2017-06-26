@@ -998,7 +998,7 @@ public class bikeNetUnity : MonoBehaviour {
 					//subEnergy = 7.5f;
 					break;
 				}
-				subEnergy = 100f / 20f; //15秒.
+				subEnergy = 100f / 20f; //20秒.
 				
 				subEnergy = subEnergy * Time.deltaTime;
 				energy -= subEnergy;
