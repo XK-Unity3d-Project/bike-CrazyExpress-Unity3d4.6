@@ -1898,7 +1898,7 @@ QiNangArray[3]				QiNangArray[1]
 				shaCheInput = ((float)ShaCheLMinVal[i] - shaCheCurVal) / (ShaCheLMinVal[i] - ShaCheLMaxVal[i]);
 			}
 			shaCheInput = Mathf.Clamp01(shaCheInput);
-			shaCheInput = shaCheInput >= 0.1f ? 1f : 0f;
+			shaCheInput = shaCheInput >= 0.5f ? 1f : 0f;
 			ShaCheLVal[i] = shaCheInput;
 			InputEventCtrl.PlayerSC[i] = ShaCheLVal[i] > ShaCheRVal[i] ? ShaCheLVal[i] : ShaCheRVal[i];
 		}
@@ -2008,7 +2008,7 @@ QiNangArray[3]				QiNangArray[1]
 				shaCheInput = ((float)ShaCheRMinVal[i] - shaCheCurVal) / (ShaCheRMinVal[i] - ShaCheRMaxVal[i]);
 			}
 			shaCheInput = Mathf.Clamp01(shaCheInput);
-			shaCheInput = shaCheInput >= 0.1f ? 1f : 0f;
+			shaCheInput = shaCheInput >= 0.5f ? 1f : 0f;
 			ShaCheRVal[i] = shaCheInput;
 			InputEventCtrl.PlayerSC[i] = ShaCheLVal[i] > ShaCheRVal[i] ? ShaCheLVal[i] : ShaCheRVal[i];
 		}
